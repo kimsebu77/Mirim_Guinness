@@ -3,12 +3,28 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>Home</title>
     <link rel="stylesheet" href="../banner/header.css" />
     <link rel="stylesheet" href="home.css" />
   </head>
+
   <body>
     <div id="header"></div>
+    <div class="home_records">최근 기록들</div>
+    <div class="card-container">
+      <div class="card card-1">
+        <img
+          src="기록.jpg"
+          alt="기록 이미지"
+          onerror="
+            this.onerror = null;
+            this.src = '../banner/Guinness.png';
+          "
+          ;
+        />
+        <div class="card-title">첫번째 기록</div>
+      </div>
+    </div>
     <script>
       fetch("../banner/header.html")
         .then((res) => res.text())
