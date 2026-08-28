@@ -1,0 +1,38 @@
+body {
+  background-color: transparent;
+}
+.search-text {
+  text-align: center;
+}
+.search-box {
+  display: flex;
+  justify-content: center;
+  gap: 5px;
+}
+
+.sizeing {
+  width: 500px;
+  height: 40px;
+  box-sizing: border-box;
+}
+
+.search-box button {
+  width: 50px;
+  height: 40px;
+  box-sizing: border-box;
+}
+.record-list ul {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  padding: 30px;
+  margin: 0;
+  list-style: none;
+}
+.record-list li {
+  padding: 40px;
+  height: 150px;
+  margin-bottom: 2px;
+  background-color: #f5f5f5;
+  border-radius: 10px;
+}

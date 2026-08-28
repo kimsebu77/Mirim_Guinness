@@ -4,13 +4,13 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
-    <link rel="stylesheet" href="header.css" />
-    <link rel="stylesheet" href="search.css" />
+    <link rel="stylesheet" href="../banner/header.css" />
+    <link rel="stylesheet" href="home.css" />
   </head>
   <body>
     <div id="header"></div>
     <script>
-      fetch("header.html")
+      fetch("../banner/header.html")
         .then((res) => res.text())
         .then((data) => {
           document.getElementById("header").innerHTML = data;

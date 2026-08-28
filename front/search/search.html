@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="../banner/header.css" />
+    <link rel="stylesheet" href="search.css" />
+  </head>
+  <body>
+    <div id="header"></div>
+    <div class="se-page">
+      <div class="search-text">
+        <h1>기록 검색</h1>
+        <div class="search-box">
+          <input type="text" class="sizeing" />
+          <button onclick="">검색</button>
+        </div>
+        <div class="record-list">
+          <ul>
+            <li>기록1</li>
+            <li>기록2</li>
+            <li>기록3</li>
+            <li>기록4</li>
+            <li>기록5</li>
+            <li>기록6</li>
+            <li>기록7</li>
+            <li>기록8</li>
+            <li>기록9</li>
+            <li>기록10</li>
+            <li>기록11</li>
+            <li>기록12</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <script>
+      fetch("../banner/header.html")
+        .then((res) => res.text())
+        .then((data) => {
+          document.getElementById("header").innerHTML = data;
+        });
+    </script>
+  </body>
+</html>
