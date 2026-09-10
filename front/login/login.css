@@ -1,0 +1,11 @@
+.text {
+  text-align: center;
+  font-size: 50px;
+  font-weight: bold;
+  margin: 20px;
+}
+.div {
+  width: 300px;
+  margin: auto;
+  text-align: center;
+}

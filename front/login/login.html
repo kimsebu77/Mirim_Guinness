@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>회원가입</title>
+
+    <link rel="stylesheet" href="../banner/header.css" />
+    <link rel="stylesheet" href="login.css" />
+  </head>
+  <body>
+    <div id="header"></div>
+    <div class="text" alt="text">로그인</div>
+    <div>
+      <form>
+        <input type="text" placeholder="아이디" class="login" />
+        <input type="password" placeholder="비밀번호" class="login" />
+        <input type="email" placeholder="이메일" class="login" />
+        <input type="submit" value="로그인" />
+      </form>
+    </div>
+    <script>
+      fetch("../banner/header.html")
+        .then((res) => res.text())
+        .then((data) => {
+          document.getElementById("header").innerHTML = data;
+        });
+    </script>
+  </body>
+</html>

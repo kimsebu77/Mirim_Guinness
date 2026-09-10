@@ -4,28 +4,70 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Home</title>
+
     <link rel="stylesheet" href="../banner/header.css" />
     <link rel="stylesheet" href="home.css" />
   </head>
 
   <body>
     <div id="header"></div>
+
     <div class="home_records">최근 기록들</div>
-    <div class="card-container">
-      <div class="card card-1">
-        <img
-          src="기록.jpg"
-          alt="기록 이미지"
-          onerror="
-            this.onerror = null;
-            this.src = '../banner/Guinness.png';
-          "
-          ;
-        />
-        <div class="card-title">첫번째 기록</div>
-      </div>
-    </div>
+
+    <div class="card-container" id="card-container"></div>
+
     <script>
+      const records = [
+        {
+          image: "기록1.jpg",
+          title: "첫번째 기록",
+          size: "large",
+        },
+        {
+          image: "기록2.jpg",
+          title: "두번째 기록",
+          size: "wide",
+        },
+        {
+          image: "기록3.jpg",
+          title: "세번째 기록",
+          size: "normal",
+        },
+        {
+          image: "기록4.jpg",
+          title: "네번째 기록",
+          size: "normal",
+        },
+      ];
+
+      const container = document.getElementById("card-container");
+
+      records.forEach((record) => {
+        const card = document.createElement("div");
+
+        card.className = "card";
+
+        if (record.size === "large") {
+          card.classList.add("card-large");
+        } else if (record.size === "wide") {
+          card.classList.add("card-wide");
+        }
+
+        card.innerHTML = `
+          <img
+            src="${record.image}"
+            alt="${record.title}"
+            onerror="
+              this.onerror = null;
+              this.src = '../banner/Guinness.png';
+            "
+          />
+          <div class="card-title">${record.title}</div>
+        `;
+
+        container.appendChild(card);
+      });
+
       fetch("../banner/header.html")
         .then((res) => res.text())
         .then((data) => {
