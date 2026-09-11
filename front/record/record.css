@@ -29,6 +29,9 @@
   padding: 10px 12px;
   border: 1px solid #bbb;
 }
+.con-input:focus {
+  outline: none;
+}
 
 .email-box {
   display: flex;
