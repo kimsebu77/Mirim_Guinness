@@ -12,29 +12,45 @@
     <div class="record">
       <h1>기록 신청</h1>
       <div class="con">
-        <label>이름</label>
-        <input type="text" placeholder="이름을 입력하세요" class="con-input" />
-        <label>학생/선생님</label>
-        <select>
-          <option>학생</option>
-          <option>선생님</option>
-        </select>
+        <div class="input-group">
+          <label>이름</label>
+          <input
+            type="text"
+            placeholder="이름을 입력하세요"
+            class="con-input"
+          />
+        </div>
+
+        <div class="input-group">
+          <label>학생/선생님</label>
+          <select class="con-input">
+            <option>학생</option>
+            <option>선생님</option>
+          </select>
+        </div>
       </div>
+
       <div class="con">
-        <label>이메일</label>
-        <input
-          type="text"
-          placeholder="이메일을 입력하세요"
-          class="con-input"
-        />
-        <select>
-          <option value="@gmail.com">@gmail.com</option>
-          <option value="@e-mirim.hs.kr">@e-mirim.hs.kr</option>
-        </select>
+        <div class="input-group">
+          <label>이메일</label>
+          <div class="email-box">
+            <input
+              type="text"
+              placeholder="이메일을 입력하세요"
+              class="con-input"
+            />
+            <select>
+              <option value="@gmail.com">@gmail.com</option>
+              <option value="@e-mirim.hs.kr">@e-mirim.hs.kr</option>
+            </select>
+          </div>
+        </div>
+        <div class="input-group">
+          <label>설명</label>
+          <input class="con-input" placeholder="어떤 기록인지 설명해주세요" />
+        </div>
       </div>
-      <label>설명</label>
-      <input />
-      <br /><button class="rbutton">신청하기</button>
+      <button class="rbutton">신청하기</button>
     </div>
     <script>
       fetch("../banner/header.html")
