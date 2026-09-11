@@ -9,6 +9,33 @@
   </head>
   <body>
     <div id="header"></div>
+    <div class="record">
+      <h1>기록 신청</h1>
+      <div class="con">
+        <label>이름</label>
+        <input type="text" placeholder="이름을 입력하세요" class="con-input" />
+        <label>학생/선생님</label>
+        <select>
+          <option>학생</option>
+          <option>선생님</option>
+        </select>
+      </div>
+      <div class="con">
+        <label>이메일</label>
+        <input
+          type="text"
+          placeholder="이메일을 입력하세요"
+          class="con-input"
+        />
+        <select>
+          <option value="@gmail.com">@gmail.com</option>
+          <option value="@e-mirim.hs.kr">@e-mirim.hs.kr</option>
+        </select>
+      </div>
+      <label>설명</label>
+      <input />
+      <br /><button class="rbutton">신청하기</button>
+    </div>
     <script>
       fetch("../banner/header.html")
         .then((res) => res.text())
