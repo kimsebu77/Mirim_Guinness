@@ -38,16 +38,19 @@
 }
 
 .email-box .con-input {
-  width: 400px;
+  width: 386px;
   border-radius: 15px 0 0 15px;
 }
 
 .email-box select {
   height: 50px;
-  width: 100px;
+  width: 114px;
   border: 1px solid #bbb;
   border-left: none;
   border-radius: 0 15px 15px 0;
+}
+.email-box select:focus {
+  outline: none;
 }
 
 .rbutton {
