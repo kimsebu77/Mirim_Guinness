@@ -11,40 +11,133 @@
 
   <body>
     <div id="header"></div>
+    <section class="hero">
+      <div class="slide-track" id="slideTrack">
+        <div class="slide slide-1">
+          <div class="slide-content">
+            <h1>미림 기네스북</h1>
+            <p>저희의 특별한 기록을 만나보세요!</p>
+            <button>기록 보러가기</button>
+          </div>
+        </div>
+
+        <div class="slide slide-2">
+          <div class="slide-content">
+            <h1>기록을 세우고 싶나요?</h1>
+            <p>새로운 기록을 신청해보세요!</p>
+            <button>기록 신청하기</button>
+          </div>
+        </div>
+      </div>
+
+      <button class="prev">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="30"
+          height="30"
+          fill="currentColor"
+          class="bi bi-chevron-left"
+          viewBox="0 0 16 16"
+        >
+          <path
+            fill-rule="evenodd"
+            d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0"
+          />
+        </svg>
+      </button>
+      <button class="next">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="30"
+          height="30"
+          fill="currentColor"
+          class="bi bi-chevron-right"
+          viewBox="0 0 16 16"
+        >
+          <path
+            fill-rule="evenodd"
+            d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708"
+          />
+        </svg>
+      </button>
+    </section>
 
     <div class="home_records">최근 기록들</div>
 
     <div class="card-container" id="card-container"></div>
 
     <script>
+      fetch("../banner/header.html")
+        .then((res) => res.text())
+        .then((data) => {
+          document.getElementById("header").innerHTML = data;
+        });
+
+      const track = document.getElementById("slideTrack");
+      let slides = Array.from(track.children);
+
+      const firstClone = slides[0].cloneNode(true);
+      const lastClone = slides[slides.length - 1].cloneNode(true);
+      firstClone.classList.add("clone");
+      lastClone.classList.add("clone");
+
+      track.appendChild(firstClone);
+      track.insertBefore(lastClone, slides[0]);
+
+      slides = Array.from(track.children);
+
+      let currentIndex = 1;
+      const slideCount = slides.length;
+      let isTransitioning = false;
+
+      function setTrackPosition(withTransition = true) {
+        track.style.transition = withTransition
+          ? "transform 0.5s ease"
+          : "none";
+        track.style.transform = `translateX(-${currentIndex * 100}%)`;
+      }
+
+      setTrackPosition(false);
+
+      function goToSlide(index) {
+        if (isTransitioning) return;
+        isTransitioning = true;
+        currentIndex = index;
+        setTrackPosition(true);
+      }
+
+      document.querySelector(".next").addEventListener("click", () => {
+        goToSlide(currentIndex + 1);
+      });
+
+      document.querySelector(".prev").addEventListener("click", () => {
+        goToSlide(currentIndex - 1);
+      });
+
+      track.addEventListener("transitionend", () => {
+        isTransitioning = false;
+
+        if (slides[currentIndex].classList.contains("clone")) {
+          if (currentIndex === slideCount - 1) {
+            currentIndex = 1;
+          } else if (currentIndex === 0) {
+            currentIndex = slideCount - 2;
+          }
+          setTrackPosition(false);
+        }
+      });
+
       const records = [
-        {
-          image: "기록1.jpg",
-          title: "첫번째 기록",
-          size: "large",
-        },
-        {
-          image: "기록2.jpg",
-          title: "두번째 기록",
-          size: "wide",
-        },
-        {
-          image: "기록3.jpg",
-          title: "세번째 기록",
-          size: "normal",
-        },
-        {
-          image: "기록4.jpg",
-          title: "네번째 기록",
-          size: "normal",
-        },
+        { image: "기록1.jpg", title: "첫번째 기록", size: "large" },
+        { image: "기록2.jpg", title: "두번째 기록", size: "wide" },
+        { image: "기록3.jpg", title: "세번째 기록", size: "normal" },
+        { image: "기록4.jpg", title: "네번째 기록", size: "normal" },
       ];
 
       const container = document.getElementById("card-container");
 
       records.forEach((record) => {
         const card = document.createElement("div");
-
         card.className = "card";
 
         if (record.size === "large") {
@@ -67,12 +160,6 @@
 
         container.appendChild(card);
       });
-
-      fetch("../banner/header.html")
-        .then((res) => res.text())
-        .then((data) => {
-          document.getElementById("header").innerHTML = data;
-        });
     </script>
   </body>
 </html>

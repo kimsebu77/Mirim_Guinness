@@ -1,3 +1,6 @@
+body {
+  min-height: 1500px;
+}
 .home_records {
   font-size: 28px;
   font-weight: bold;
@@ -54,4 +57,80 @@
 .card-wide {
   grid-column: span 2;
   grid-row: span 1;
+}
+
+.hero {
+  position: relative;
+  width: 100%;
+  height: 400px;
+  overflow: hidden;
+}
+
+.slide-track {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  transition: transform 0.5s ease;
+}
+
+.slide {
+  position: relative;
+  flex: 0 0 100%;
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+}
+.slide-1 {
+  background-image: url("../banner/Guinness.png");
+}
+.slide-2 {
+  background-image: url("../banner/Guinness.png");
+}
+.slide-content {
+  position: absolute;
+  left: 100px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: black;
+}
+
+.slide-content h1 {
+  font-size: 50px;
+  margin-bottom: 20px;
+}
+
+.slide-content p {
+  font-size: 22px;
+  margin-bottom: 30px;
+}
+
+.slide-content button {
+  padding: 15px 30px;
+  border: none;
+  border-radius: 5px;
+  background-color: white;
+  color: black;
+  font-size: 18px;
+  cursor: pointer;
+}
+
+.prev,
+.next {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 10;
+  border: none;
+  background: transparent;
+  color: black;
+  font-size: 50px;
+  cursor: pointer;
+}
+.prev {
+  left: 20px;
+}
+
+.next {
+  right: 20px;
 }
