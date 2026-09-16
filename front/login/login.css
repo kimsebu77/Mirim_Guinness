@@ -1,11 +1,75 @@
-.text {
-  text-align: center;
-  /* font-size: 50px;
-  font-weight: bold;
-  margin: 20px; */
+.login-container {
+  width: 610px;
+  margin: 50px auto;
 }
-.div {
-  width: 300px;
-  margin: auto;
+
+.login-text {
   text-align: center;
+  margin-top: 0;
+  margin-bottom: 60px;
+  font-size: 40px;
+}
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+}
+
+.login-input {
+  width: 610px;
+  height: 60px;
+  box-sizing: border-box;
+
+  padding: 10px 15px;
+
+  border: 1px solid #ccc;
+  border-radius: 15px;
+
+  font-size: 16px;
+}
+
+.login-input:focus {
+  outline: none;
+  border-color: #222;
+}
+
+.find-links {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+
+  margin-top: 5px;
+
+  font-size: 15px;
+}
+
+.find-links a {
+  color: #555;
+  text-decoration: none;
+}
+
+.signup-link {
+  margin-top: 20px;
+
+  color: #555;
+  text-decoration: none;
+
+  font-size: 15px;
+}
+.lbutton {
+  width: 610px;
+  height: 60px;
+
+  border: none;
+  border-radius: 15px;
+
+  background-color: green;
+  color: white;
+
+  font-size: 17px;
+  font-weight: bold;
+
+  cursor: pointer;
 }

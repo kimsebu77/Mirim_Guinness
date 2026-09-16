@@ -1,24 +1,37 @@
 <!doctype html>
-<html lang="en">
+<html lang="ko">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
     <title>로그인</title>
 
     <link rel="stylesheet" href="../banner/header.css" />
     <link rel="stylesheet" href="login.css" />
   </head>
+
   <body>
     <div id="header"></div>
-    <h1 class="text" alt="text">로그인</h1>
-    <div>
-      <form>
-        <input type="text" placeholder="아이디" class="login" />
-        <input type="password" placeholder="비밀번호" class="login" />
-        <input type="submit" value="로그인" />
-        <a href="./signup.html">계정이 없으신가요? 회원가입</a>
+    <main class="login-container">
+      <h1 class="login-text">로그인</h1>
+
+      <form class="login-form">
+        <input type="text" placeholder="아이디" class="login-input" />
+        <input type="password" placeholder="비밀번호" class="login-input" />
+        <button type="submit" class="lbutton">로그인</button>
+        <div class="find-links">
+          <a href="#">아이디 찾기</a>
+
+          <span>|</span>
+
+          <a href="#">비밀번호 찾기</a>
+        </div>
+        <a href="./signup.html" class="signup-link">
+          계정이 없으신가요? 회원가입
+        </a>
       </form>
-    </div>
+    </main>
+
     <script>
       fetch("../banner/header.html")
         .then((res) => res.text())
