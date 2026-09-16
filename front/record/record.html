@@ -4,17 +4,19 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>기록 신청하기</title>
+    <script src="./auth-guard.js"></script>
     <link rel="stylesheet" href="../banner/header.css" />
     <link rel="stylesheet" href="record.css" />
   </head>
   <body>
     <div id="header"></div>
-    <div class="record">
+    <form id="record-form" class="record">
       <h1>기록 신청</h1>
       <div class="con">
         <div class="input-group">
           <label>이름</label>
           <input
+            id="name"
             type="text"
             placeholder="이름을 입력하세요"
             class="con-input"
@@ -23,9 +25,9 @@
 
         <div class="input-group">
           <label>학생/선생님</label>
-          <select class="con-input">
-            <option>학생</option>
-            <option>선생님</option>
+          <select id="applicant-type" class="con-input">
+            <option value="student">학생</option>
+            <option value="teacher">선생님</option>
           </select>
         </div>
       </div>
@@ -35,11 +37,12 @@
           <label>이메일</label>
           <div class="email-box">
             <input
+              id="email-id"
               type="text"
               placeholder="이메일을 입력하세요"
               class="con-input"
             />
-            <select>
+            <select id="email-domain">
               <option value="@gmail.com">@gmail.com</option>
               <option value="@e-mirim.hs.kr">@e-mirim.hs.kr</option>
             </select>
@@ -47,11 +50,16 @@
         </div>
         <div class="input-group">
           <label>설명</label>
-          <input class="con-input" placeholder="어떤 기록인지 설명해주세요" />
+          <input
+            id="description"
+            class="con-input"
+            placeholder="어떤 기록인지 설명해주세요"
+          />
         </div>
       </div>
-      <button class="rbutton">신청하기</button>
-    </div>
+      <button type="submit" class="rbutton">신청하기</button>
+    </form>
+    <script src="./record.js" defer></script>
     <script>
       fetch("../banner/header.html")
         .then((res) => res.text())

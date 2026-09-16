@@ -13,10 +13,25 @@
     <main class="login-container">
       <h1 class="login-text">회원가입</h1>
 
-      <form class="login-form">
-        <input type="text" placeholder="이메일" class="login-input" />
-        <input type="text" placeholder="아이디" class="login-input" />
-        <input type="password" placeholder="비밀번호" class="login-input" />
+      <form id="signup-form" class="login-form">
+        <input
+          id="email"
+          type="text"
+          placeholder="이메일"
+          class="login-input"
+        />
+        <input
+          id="nickname"
+          type="text"
+          placeholder="아이디"
+          class="login-input"
+        />
+        <input
+          id="password"
+          type="password"
+          placeholder="비밀번호"
+          class="login-input"
+        />
         <input
           type="password"
           placeholder="비밀번호 확인"
@@ -35,5 +50,6 @@
           document.getElementById("header").innerHTML = data;
         });
     </script>
+    <script src="./signup.js" defer></script>
   </body>
 </html>
