@@ -7,6 +7,7 @@
     <script src="./auth-guard.js"></script>
     <link rel="stylesheet" href="../banner/header.css" />
     <link rel="stylesheet" href="record.css" />
+    <link rel="stylesheet" href="../footer/footer.css" />
   </head>
   <body>
     <div id="header"></div>
@@ -59,13 +60,10 @@
       </div>
       <button type="submit" class="rbutton">신청하기</button>
     </form>
+    <div id="footer"></div>
+
+    <script src="../banner/header.js"></script>
     <script src="./record.js" defer></script>
-    <script>
-      fetch("../banner/header.html")
-        .then((res) => res.text())
-        .then((data) => {
-          document.getElementById("header").innerHTML = data;
-        });
-    </script>
+    <script src="../footer/footer.js"></script>
   </body>
 </html>

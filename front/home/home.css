@@ -1,5 +1,8 @@
 body {
   min-height: 1500px;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
 }
 .home_records {
   font-size: 28px;
@@ -109,8 +112,8 @@ body {
   padding: 15px 30px;
   border: none;
   border-radius: 5px;
-  background-color: white;
-  color: black;
+  background-color: green;
+  color: white;
   font-size: 18px;
   cursor: pointer;
 }

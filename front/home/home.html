@@ -7,17 +7,24 @@
 
     <link rel="stylesheet" href="../banner/header.css" />
     <link rel="stylesheet" href="home.css" />
+    <link rel="stylesheet" href="../footer/footer.css" />
   </head>
 
   <body>
     <div id="header"></div>
+
     <section class="hero">
       <div class="slide-track" id="slideTrack">
         <div class="slide slide-1">
           <div class="slide-content">
             <h1>미림 기네스북</h1>
             <p>저희의 특별한 기록을 만나보세요!</p>
-            <button>기록 보러가기</button>
+            <button
+              class="move"
+              onclick="location.href = '../search/search.html'"
+            >
+              기록 보러가기
+            </button>
           </div>
         </div>
 
@@ -25,7 +32,12 @@
           <div class="slide-content">
             <h1>기록을 세우고 싶나요?</h1>
             <p>새로운 기록을 신청해보세요!</p>
-            <button>기록 신청하기</button>
+            <button
+              class="move"
+              onclick="location.href = '../record/record.html'"
+            >
+              기록 신청하기
+            </button>
           </div>
         </div>
       </div>
@@ -66,13 +78,12 @@
 
     <div class="card-container" id="card-container"></div>
 
-    <script>
-      fetch("../banner/header.html")
-        .then((res) => res.text())
-        .then((data) => {
-          document.getElementById("header").innerHTML = data;
-        });
+    <div id="footer"></div>
 
+    <script src="../banner/header.js"></script>
+    <script src="../footer/footer.js"></script>
+    <script>
+      //히어로, 캐러셀
       const track = document.getElementById("slideTrack");
       let slides = Array.from(track.children);
 
@@ -99,7 +110,7 @@
 
       setTrackPosition(false);
 
-      function goToSlide(index) {
+      function goSlide(index) {
         if (isTransitioning) return;
         isTransitioning = true;
         currentIndex = index;
@@ -107,11 +118,11 @@
       }
 
       document.querySelector(".next").addEventListener("click", () => {
-        goToSlide(currentIndex + 1);
+        goSlide(currentIndex + 1);
       });
 
       document.querySelector(".prev").addEventListener("click", () => {
-        goToSlide(currentIndex - 1);
+        goSlide(currentIndex - 1);
       });
 
       track.addEventListener("transitionend", () => {
@@ -127,6 +138,7 @@
         }
       });
 
+      //기록 카드들
       const records = [
         { image: "기록1.jpg", title: "첫번째 기록", size: "large" },
         { image: "기록2.jpg", title: "두번째 기록", size: "wide" },

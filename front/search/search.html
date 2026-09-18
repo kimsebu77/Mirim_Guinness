@@ -6,6 +6,7 @@
     <title>기록 검색하기</title>
     <link rel="stylesheet" href="../banner/header.css" />
     <link rel="stylesheet" href="search.css" />
+    <link rel="stylesheet" href="../footer/footer.css" />
   </head>
   <body>
     <div id="header"></div>
@@ -40,12 +41,9 @@
         </div>
       </div>
     </div>
-    <script>
-      fetch("../banner/header.html")
-        .then((res) => res.text())
-        .then((data) => {
-          document.getElementById("header").innerHTML = data;
-        });
-    </script>
+    <div id="footer"></div>
+
+    <script src="../banner/header.js"></script>
+    <script src="../footer/footer.js"></script>
   </body>
 </html>

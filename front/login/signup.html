@@ -43,13 +43,9 @@
         </a>
       </form>
     </main>
-    <script>
-      fetch("../banner/header.html")
-        .then((res) => res.text())
-        .then((data) => {
-          document.getElementById("header").innerHTML = data;
-        });
-    </script>
+    <div id="footer"></div>
+
+    <script src="../banner/header.js"></script>
     <script src="./signup.js" defer></script>
   </body>
 </html>
