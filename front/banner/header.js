@@ -6,7 +6,6 @@ function loadHeader() {
 
       const token = localStorage.getItem("access_token");
       const authButton = document.querySelector(".login-button");
-      const authIcon = authButton.querySelector("img");
 
       if (token) {
         authButton.onclick = () => {

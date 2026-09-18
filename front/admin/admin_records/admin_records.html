@@ -1,0 +1,265 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="../admin_header/admin_header.css" />
+    <link rel="stylesheet" href="./admin_records.css" />
+  </head>
+  <body>
+    <div id="header"></div>
+
+    <div class="records-top">
+      <h1>기록 관리</h1>
+      <button id="add-record-btn" class="btn-add">+ 새 기록 추가</button>
+    </div>
+
+    <div class="records-container" id="records-container"></div>
+
+    <!-- 추가/수정 모달 -->
+    <div id="record-modal" class="modal hidden">
+      <div class="modal-box">
+        <h2 id="modal-title">기록 추가</h2>
+        <form id="record-form">
+          <input type="hidden" id="record-id" />
+
+          <div class="form-group">
+            <label>기록 보유자</label>
+            <input type="text" id="holder-name" required />
+          </div>
+
+          <div class="form-group">
+            <label>기록 값</label>
+            <input type="text" id="record-value" required />
+          </div>
+
+          <div class="form-group">
+            <label>설명</label>
+            <input
+              type="text"
+              id="description"
+              placeholder="간단한 설명을 입력하세요"
+            />
+          </div>
+
+          <div class="form-group">
+            <label>사진 URL</label>
+            <input type="text" id="photo-url" placeholder="선택사항" />
+          </div>
+
+          <div class="form-group">
+            <label>유튜브 URL</label>
+            <input
+              type="text"
+              id="youtube-url"
+              placeholder="https://youtube.com/watch?v=..."
+            />
+          </div>
+
+          <div class="form-group">
+            <label>기록 날짜</label>
+            <input type="date" id="recorded-at" required />
+          </div>
+
+          <div class="modal-actions">
+            <button type="button" id="modal-cancel" class="btn-cancel">
+              취소
+            </button>
+            <button type="submit" class="btn-save">저장</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <script src="../admin_header/admin_header.js"></script>
+    <script src="./admin_records.js" defer></script>
+    <script>
+      // ===== 더미 데이터 (DB 연결 전 임시) =====
+      let records = [
+        {
+          id: "1",
+          holder_name: "홍길동",
+          record_value: "팔굽혀펴기 100개",
+          description: "",
+          photo_url: "",
+          youtube_url: "",
+          recorded_at: "2026-09-10",
+          created_at: "2026-09-10T12:00:00Z",
+        },
+        {
+          id: "2",
+          holder_name: "이영희",
+          record_value: "종이학 500개 접기",
+          description: "",
+          photo_url: "",
+          youtube_url: "",
+          recorded_at: "2026-09-12",
+          created_at: "2026-09-12T09:30:00Z",
+        },
+      ];
+
+      // ===== DB 연동 지점 (담당자가 이 3개 함수 내부만 교체하면 됨) =====
+
+      async function fetchRecords() {
+        // TODO: 실제 DB 연결 시 아래로 교체
+        // const res = await fetch("/api/records");
+        // return await res.json();
+        return records;
+      }
+
+      async function saveRecord(record) {
+        // TODO: 실제 DB 연결 시 아래로 교체
+        // const method = record.id ? "PUT" : "POST";
+        // const url = record.id ? `/api/records/${record.id}` : "/api/records";
+        // const res = await fetch(url, {
+        //   method,
+        //   headers: { "Content-Type": "application/json" },
+        //   body: JSON.stringify(record),
+        // });
+        // return await res.json();
+
+        if (record.id) {
+          const idx = records.findIndex((r) => r.id === record.id);
+          records[idx] = { ...records[idx], ...record };
+        } else {
+          record.id = crypto.randomUUID();
+          record.created_at = new Date().toISOString();
+          records.push(record);
+        }
+        return record;
+      }
+
+      async function deleteRecord(id) {
+        // TODO: 실제 DB 연결 시 아래로 교체
+        // await fetch(`/api/records/${id}`, { method: "DELETE" });
+        records = records.filter((r) => r.id !== id);
+      }
+
+      // ===== 렌더링 =====
+
+      function createRecordCard(record) {
+        const card = document.createElement("div");
+        card.className = "record-card";
+        card.dataset.id = record.id;
+
+        card.innerHTML = `
+    ${
+      record.photo_url
+        ? `<img src="${record.photo_url}" class="record-photo" alt="${record.holder_name}" />`
+        : `<div class="record-photo record-photo-empty">사진 없음</div>`
+    }
+    <div class="record-body">
+      <span class="record-holder">${record.holder_name}</span>
+      <span class="record-value">${record.record_value}</span>
+      ${
+        record.description
+          ? `<span class="record-desc">${record.description}</span>`
+          : ""
+      }
+      <span class="record-date">${record.recorded_at}</span>
+      ${
+        record.youtube_url
+          ? `<a href="${record.youtube_url}" target="_blank" class="record-youtube">▶ 유튜브 보기</a>`
+          : ""
+      }
+    </div>
+    <div class="record-actions">
+      <button class="btn-edit" data-action="edit">수정</button>
+      <button class="btn-delete" data-action="delete">삭제</button>
+    </div>
+  `;
+
+        card
+          .querySelector(".btn-edit")
+          .addEventListener("click", () => openModal(record));
+        card
+          .querySelector(".btn-delete")
+          .addEventListener("click", () => handleDelete(record.id));
+
+        return card;
+      }
+
+      async function renderRecords() {
+        const container = document.getElementById("records-container");
+        container.innerHTML = "";
+
+        const data = await fetchRecords();
+        const sorted = [...data].sort(
+          (a, b) => new Date(b.recorded_at) - new Date(a.recorded_at),
+        );
+
+        sorted.forEach((record) => {
+          container.appendChild(createRecordCard(record));
+        });
+      }
+
+      // ===== 모달 제어 =====
+
+      const modal = document.getElementById("record-modal");
+      const form = document.getElementById("record-form");
+
+      function openModal(record = null) {
+        document.getElementById("modal-title").textContent = record
+          ? "기록 수정"
+          : "기록 추가";
+
+        document.getElementById("record-id").value = record?.id ?? "";
+        document.getElementById("holder-name").value =
+          record?.holder_name ?? "";
+        document.getElementById("record-value").value =
+          record?.record_value ?? "";
+        document.getElementById("description").value =
+          record?.description ?? "";
+        document.getElementById("photo-url").value = record?.photo_url ?? "";
+        document.getElementById("youtube-url").value =
+          record?.youtube_url ?? "";
+        document.getElementById("recorded-at").value =
+          record?.recorded_at ?? "";
+
+        modal.classList.remove("hidden");
+      }
+
+      function closeModal() {
+        modal.classList.add("hidden");
+        form.reset();
+      }
+
+      async function handleDelete(id) {
+        if (!confirm("이 기록을 삭제하시겠습니까?")) return;
+        await deleteRecord(id);
+        await renderRecords();
+      }
+
+      form.addEventListener("submit", async (e) => {
+        e.preventDefault();
+
+        const record = {
+          id: document.getElementById("record-id").value || null,
+          holder_name: document.getElementById("holder-name").value,
+          record_value: document.getElementById("record-value").value,
+          description: document.getElementById("description").value,
+          photo_url: document.getElementById("photo-url").value,
+          youtube_url: document.getElementById("youtube-url").value,
+          recorded_at: document.getElementById("recorded-at").value,
+        };
+
+        await saveRecord(record);
+        closeModal();
+        await renderRecords();
+      });
+
+      document
+        .getElementById("add-record-btn")
+        .addEventListener("click", () => {
+          openModal();
+        });
+
+      document
+        .getElementById("modal-cancel")
+        .addEventListener("click", closeModal);
+
+      document.addEventListener("DOMContentLoaded", () => {
+        renderRecords();
+      });
+    </script>
+  </body>
+</html>

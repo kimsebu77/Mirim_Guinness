@@ -1,0 +1,176 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <link rel="stylesheet" href="../admin_header/admin_header.css" />
+    <link rel="stylesheet" href="./admin_requests.css" />
+  </head>
+  <body>
+    <div id="header"></div>
+    <div class="requests-top">
+      <h1>신청된 기록</h1>
+    </div>
+    <div class="requests-container" id="requests-container">임시</div>
+    <script src="../admin_header/admin_header.js"></script>
+    <script>
+      let requests = [
+        {
+          id: "1",
+          user_id: "user-uuid-1",
+          name: "홍길동",
+          applicant_type: "student",
+          email: "hong123@e-mirim.hs.kr",
+          description: "가장 빠르게 마신 우유",
+          comment: "",
+          status: "pending",
+          created_at: "2026-09-15T09:00:00Z",
+        },
+        {
+          id: "2",
+          user_id: "user-uuid-2",
+          name: "김철수",
+          applicant_type: "teacher",
+          email: "kim.teacher@gmail.com",
+          description: "가장 오래 버틴 팔굽혀펴기",
+          comment: "",
+          status: "pending",
+          created_at: "2026-09-16T09:00:00Z",
+        },
+        {
+          id: "3",
+          user_id: "user-uuid-3",
+          name: "이영희",
+          applicant_type: "student",
+          email: "lee456@e-mirim.hs.kr",
+          description: "가장 많이 접은 종이학",
+          comment: "",
+          status: "pending",
+          created_at: "2026-09-17T09:00:00Z",
+        },
+      ];
+
+      async function fetchRequests() {
+        return requests;
+      }
+
+      async function updateRequestStatus(id, status, comment) {
+        const idx = requests.findIndex((r) => r.id === id);
+        if (idx !== -1) {
+          requests[idx].status = status;
+          requests[idx].comment = comment;
+        }
+        return requests[idx];
+      }
+
+      function applicantTypeLabel(type) {
+        return type === "teacher" ? "선생님" : "학생";
+      }
+
+      function statusLabel(status) {
+        return {
+          pending: "대기중",
+          approved: "승인됨",
+          rejected: "거절됨",
+          returned: "반려됨",
+        }[status];
+      }
+
+      function formatDate(isoString) {
+        const d = new Date(isoString);
+        return d.toLocaleDateString("ko-KR", {
+          year: "numeric",
+          month: "2-digit",
+          day: "2-digit",
+        });
+      }
+
+      function createRequestBar(request) {
+        const bar = document.createElement("div");
+        bar.className = "request-bar";
+        bar.dataset.id = request.id;
+        if (request.status !== "pending") {
+          bar.classList.add("processed");
+        }
+
+        bar.innerHTML = `
+    <div class="request-main">
+      <div class="request-name-row">
+        <span class="request-name">${request.name}</span>
+        <span class="request-type-badge ${request.applicant_type}">
+          ${applicantTypeLabel(request.applicant_type)}
+        </span>
+        <span class="request-status-badge ${request.status}">
+          ${statusLabel(request.status)}
+        </span>
+      </div>
+
+      <div class="request-field">
+        <span class="field-label">이메일</span>
+        <span class="field-value">${request.email}</span>
+      </div>
+
+      <div class="request-field">
+        <span class="field-label">설명</span>
+        <span class="field-value">${request.description}</span>
+      </div>
+
+      <div class="request-field">
+        <span class="field-label">신청일</span>
+        <span class="field-value">${formatDate(request.created_at)}</span>
+      </div>
+
+      <div class="request-comment">
+        <input
+          type="text"
+          class="comment-input"
+          placeholder="코멘트 입력..."
+          value="${request.comment ?? ""}"
+        />
+      </div>
+    </div>
+
+    <div class="request-actions">
+      <button class="btn-approve" data-action="approved">승인</button>
+      <button class="btn-reject" data-action="rejected">거절</button>
+      <button class="btn-return" data-action="returned">반려</button>
+    </div>
+  `;
+
+        bar.querySelectorAll("button").forEach((btn) => {
+          btn.addEventListener("click", () => handleAction(request, btn));
+        });
+
+        return bar;
+      }
+
+      async function handleAction(request, btn) {
+        const action = btn.dataset.action;
+        const comment = btn
+          .closest(".request-bar")
+          .querySelector(".comment-input").value;
+
+        await updateRequestStatus(request.id, action, comment);
+        await renderRequests();
+      }
+
+      async function renderRequests() {
+        const container = document.getElementById("requests-container");
+        container.innerHTML = "";
+
+        const data = await fetchRequests();
+        const sorted = [...data].sort((a, b) => {
+          if (a.status === "pending" && b.status !== "pending") return -1;
+          if (a.status !== "pending" && b.status === "pending") return 1;
+          return new Date(a.created_at) - new Date(b.created_at);
+        });
+
+        sorted.forEach((request) => {
+          container.appendChild(createRequestBar(request));
+        });
+      }
+
+      document.addEventListener("DOMContentLoaded", () => {
+        renderRequests();
+      });
+    </script>
+  </body>
+</html>

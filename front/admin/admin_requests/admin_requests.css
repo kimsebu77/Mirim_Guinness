@@ -1,0 +1,176 @@
+.requests-top {
+  width: 80%;
+  max-width: 800px;
+  margin: 24px auto 12px;
+}
+
+.requests-top h1 {
+  color: #222;
+}
+
+.requests-container {
+  width: 80%;
+  max-width: 800px;
+  height: 600px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 16px;
+  background-color: #f7f7f7;
+  border: 1px solid #e0e0e0;
+  border-radius: 12px;
+  overflow-y: auto;
+  box-sizing: border-box;
+}
+
+.requests-container::-webkit-scrollbar {
+  width: 8px;
+}
+
+.requests-container::-webkit-scrollbar-track {
+  background: #f7f7f7;
+  border-radius: 4px;
+}
+
+.requests-container::-webkit-scrollbar-thumb {
+  background: #ccc;
+  border-radius: 4px;
+}
+
+.requests-container::-webkit-scrollbar-thumb:hover {
+  background: #aaa;
+}
+
+.request-bar {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  background-color: #ffffff;
+  border: 1px solid #e5e5e5;
+  border-radius: 8px;
+  padding: 16px 20px;
+  gap: 16px;
+  transition: opacity 0.2s;
+  flex-shrink: 0;
+}
+
+.request-bar.processed {
+  opacity: 0.6;
+}
+
+.request-main {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  flex: 1;
+}
+
+.request-name-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 4px;
+}
+
+.request-name {
+  font-weight: bold;
+  font-size: 1.05em;
+  color: #222;
+}
+
+.request-type-badge,
+.request-status-badge {
+  font-size: 0.7em;
+  padding: 3px 8px;
+  border-radius: 10px;
+  color: #fff;
+  font-weight: 500;
+}
+
+.request-type-badge.student {
+  background-color: #3498db;
+}
+
+.request-type-badge.teacher {
+  background-color: #9b59b6;
+}
+
+.request-status-badge.pending {
+  background-color: #f39c12;
+}
+
+.request-status-badge.approved {
+  background-color: #2ecc71;
+}
+
+.request-status-badge.rejected {
+  background-color: #e74c3c;
+}
+
+.request-status-badge.returned {
+  background-color: #95a5a6;
+}
+
+.request-field {
+  display: flex;
+  gap: 8px;
+  font-size: 0.9em;
+}
+
+.field-label {
+  min-width: 44px;
+  color: #999;
+  flex-shrink: 0;
+}
+
+.field-value {
+  color: #333;
+}
+
+.request-comment {
+  margin-top: 6px;
+  max-width: 320px;
+}
+
+.comment-input {
+  width: 100%;
+  padding: 6px 10px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  background-color: #fff;
+  color: #222;
+  box-sizing: border-box;
+  font-size: 0.85em;
+}
+
+.request-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  flex-shrink: 0;
+}
+
+.request-actions button {
+  padding: 7px 16px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.85em;
+  white-space: nowrap;
+}
+
+.btn-approve {
+  background-color: #2ecc71;
+  color: #fff;
+}
+
+.btn-reject {
+  background-color: #e74c3c;
+  color: #fff;
+}
+
+.btn-return {
+  background-color: #f39c12;
+  color: #fff;
+}
