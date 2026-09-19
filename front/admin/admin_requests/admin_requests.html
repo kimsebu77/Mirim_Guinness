@@ -49,16 +49,31 @@
       ];
 
       async function fetchRequests() {
-        return requests;
+        const token = localStorage.getItem("access_token");
+        const res = await fetch(
+          "http://localhost:3000/api/record/admin/requests",
+          {
+            headers: { Authorization: `Bearer ${token}` },
+          },
+        );
+        const result = await res.json();
+        return result.requests;
       }
 
       async function updateRequestStatus(id, status, comment) {
-        const idx = requests.findIndex((r) => r.id === id);
-        if (idx !== -1) {
-          requests[idx].status = status;
-          requests[idx].comment = comment;
-        }
-        return requests[idx];
+        const token = localStorage.getItem("access_token");
+        const res = await fetch(
+          `http://localhost:3000/api/record/admin/requests/${id}/status`,
+          {
+            method: "PATCH",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
+            },
+            body: JSON.stringify({ status, comment }),
+          },
+        );
+        return await res.json();
       }
 
       function applicantTypeLabel(type) {

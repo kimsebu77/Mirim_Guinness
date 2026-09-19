@@ -100,38 +100,41 @@
       // ===== DB 연동 지점 (담당자가 이 3개 함수 내부만 교체하면 됨) =====
 
       async function fetchRecords() {
-        // TODO: 실제 DB 연결 시 아래로 교체
-        // const res = await fetch("/api/records");
-        // return await res.json();
-        return records;
+        const res = await fetch("http://localhost:3000/api/records");
+        return await res.json();
       }
 
       async function saveRecord(record) {
-        // TODO: 실제 DB 연결 시 아래로 교체
-        // const method = record.id ? "PUT" : "POST";
-        // const url = record.id ? `/api/records/${record.id}` : "/api/records";
-        // const res = await fetch(url, {
-        //   method,
-        //   headers: { "Content-Type": "application/json" },
-        //   body: JSON.stringify(record),
-        // });
-        // return await res.json();
+        const token = localStorage.getItem("access_token");
+        const method = record.id ? "PUT" : "POST";
+        const url = record.id
+          ? `http://localhost:3000/api/records/${record.id}`
+          : "http://localhost:3000/api/records";
 
-        if (record.id) {
-          const idx = records.findIndex((r) => r.id === record.id);
-          records[idx] = { ...records[idx], ...record };
-        } else {
-          record.id = crypto.randomUUID();
-          record.created_at = new Date().toISOString();
-          records.push(record);
+        const res = await fetch(url, {
+          method,
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify(record),
+        });
+
+        if (!res.ok) {
+          const result = await res.json();
+          alert(result.message);
+          throw new Error(result.message);
         }
-        return record;
+
+        return await res.json();
       }
 
       async function deleteRecord(id) {
-        // TODO: 실제 DB 연결 시 아래로 교체
-        // await fetch(`/api/records/${id}`, { method: "DELETE" });
-        records = records.filter((r) => r.id !== id);
+        const token = localStorage.getItem("access_token");
+        await fetch(`http://localhost:3000/api/records/${id}`, {
+          method: "DELETE",
+          headers: { Authorization: `Bearer ${token}` },
+        });
       }
 
       // ===== 렌더링 =====

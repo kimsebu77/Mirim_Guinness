@@ -4,6 +4,7 @@ require("dotenv").config();
 
 const authRouter = require("./routes/auth");
 const recordRouter = require("./routes/record");
+const recordsRouter = require("./routes/records");
 
 const app = express();
 
@@ -12,6 +13,7 @@ app.use(express.json());
 
 app.use("/api/auth", authRouter);
 app.use("/api/record", recordRouter);
+app.use("/api/records", recordsRouter);
 
 app.get("/", (req, res) => {
   res.json({

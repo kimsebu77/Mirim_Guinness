@@ -1,8 +1,47 @@
 const express = require("express");
 const supabase = require("../supabase");
+const { createAuthClient } = require("../supabase");
+const requireAuth = require("../middleware/auth");
+const requireAdmin = require("../middleware/requireAdmin");
 
 const router = express.Router();
 
+// 관리자: 전체 유저 목록 조회
+router.get("/admin/users", requireAuth, requireAdmin, async (req, res) => {
+  const { data, error } = await supabase
+    .from("users")
+    .select("id, nickname, role");
+
+  if (error) {
+    return res.status(500).json({ message: "유저 목록을 불러올 수 없습니다." });
+  }
+
+  res.status(200).json({ users: data });
+});
+
+// 관리자: 유저 삭제
+router.delete(
+  "/admin/users/:id",
+  requireAuth,
+  requireAdmin,
+  async (req, res) => {
+    try {
+      const { id } = req.params;
+
+      const { error } = await supabase.auth.admin.deleteUser(id);
+
+      if (error) {
+        console.error("유저 삭제 오류:", error);
+        return res.status(400).json({ message: "유저 삭제에 실패했습니다." });
+      }
+
+      res.status(200).json({ message: "유저가 삭제되었습니다." });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ message: "서버 오류가 발생했습니다." });
+    }
+  },
+);
 router.post("/signup", async (req, res) => {
   try {
     const { email, password, nickname } = req.body;
@@ -68,7 +107,7 @@ router.post("/login", async (req, res) => {
 
     const { data: userRow, error: findError } = await supabase
       .from("users")
-      .select("id")
+      .select("id", "role")
       .eq("nickname", nickname)
       .single();
     if (findError || !userRow) {
@@ -86,7 +125,8 @@ router.post("/login", async (req, res) => {
       });
     }
 
-    const { data, error } = await supabase.auth.signInWithPassword({
+    const authClient = createAuthClient();
+    const { data, error } = await authClient.auth.signInWithPassword({
       email: authUser.user.email,
       password,
     });
@@ -106,6 +146,7 @@ router.post("/login", async (req, res) => {
         id: data.user.id,
         email: data.user.email,
         nickname: nickname,
+        role: userRow.role,
       },
     });
   } catch (error) {
@@ -113,7 +154,6 @@ router.post("/login", async (req, res) => {
     res.status(500).json({ message: "서버 오류가 발생했습니다." });
   }
 });
-const requireAuth = require("../middleware/auth");
 
 router.get("/me", requireAuth, async (req, res) => {
   try {
@@ -124,6 +164,15 @@ router.get("/me", requireAuth, async (req, res) => {
       .single();
 
     if (error || !userInfo) {
+      console.error(
+        "[me] users 조회 실패 →",
+        "id:",
+        req.user.id,
+        "email:",
+        req.user.email,
+        "code:",
+        error?.code,
+      );
       return res
         .status(404)
         .json({ message: "사용자 정보를 찾을 수 없습니다." });
