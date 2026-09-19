@@ -113,4 +113,31 @@ router.post("/login", async (req, res) => {
     res.status(500).json({ message: "서버 오류가 발생했습니다." });
   }
 });
+const requireAuth = require("../middleware/auth");
+
+router.get("/me", requireAuth, async (req, res) => {
+  try {
+    const { data: userInfo, error } = await supabase
+      .from("users")
+      .select("nickname, role")
+      .eq("id", req.user.id)
+      .single();
+
+    if (error || !userInfo) {
+      return res
+        .status(404)
+        .json({ message: "사용자 정보를 찾을 수 없습니다." });
+    }
+
+    res.status(200).json({
+      id: req.user.id,
+      email: req.user.email,
+      nickname: userInfo.nickname,
+      role: userInfo.role,
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "서버 오류가 발생했습니다." });
+  }
+});
 module.exports = router;

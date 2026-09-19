@@ -63,11 +63,15 @@
 }
 
 .rbutton {
+  margin-top: 30px;
   width: 300px;
   height: 50px;
   border-radius: 15px;
-  background: green;
+  background: #176b45;
   color: white;
   border: 1px solid #bbb;
   box-sizing: border-box;
+}
+.rbutton:hover {
+  background: #12583a;
 }

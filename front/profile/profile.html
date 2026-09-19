@@ -7,12 +7,16 @@
     <link rel="stylesheet" href="../banner/header.css" />
     <link rel="stylesheet" href="profile.css" />
     <link rel="stylesheet" href="../footer/footer.css" />
+    <link rel="stylesheet" href="../shared/modal.css" />
   </head>
   <body>
     <div id="header"></div>
     <div class="profile">
       <h1>프로필</h1>
-      <div class="user-info-title">내 정보</div>
+      <div class="user-info-title">
+        <span>내 정보</span
+        ><button class="logout-button" onclick="logout()">로그아웃</button>
+      </div>
       <div class="user-info">
         <div class="info-row">
           <label>닉네임</label>
@@ -27,12 +31,19 @@
           <input type="text" id="job" value="불러오는 중" readonly />
         </div>
       </div>
-      <div class="user-requests-title">내가 신청한 기록</div>
-      <div class="user-requests"></div>
+      <a href="#" id="myrecord-link" class="myrecord-link">
+        내가 신청한 기록보기
+      </a>
     </div>
     <div id="footer"></div>
     <script src="../banner/header.js"></script>
     <script src="../footer/footer.js"></script>
-    <script></script>
+    <script src="../shared/my-requests.js" defer></script>
+    <script src="./profile.js" defer></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        setupMyRequestsModal("#myrecord-link");
+      });
+    </script>
   </body>
 </html>

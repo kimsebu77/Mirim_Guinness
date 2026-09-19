@@ -5,11 +5,13 @@ form.addEventListener("submit", async (e) => {
 
   const name = document.querySelector("#name").value.trim();
   const applicantType = document.querySelector("#applicant-type").value;
+  const phone = document.querySelector("#phone").value.trim();
   const emailId = document.querySelector("#email-id").value.trim();
   const emailDomain = document.querySelector("#email-domain").value;
+  const recordDate = document.querySelector("#calendar").value;
   const description = document.querySelector("#description").value.trim();
 
-  if (!name || !emailId || !description) {
+  if (!name || !phone || !emailId || !recordDate || !description) {
     alert("모든 항목을 입력해주세요.");
     return;
   }
@@ -27,7 +29,9 @@ form.addEventListener("submit", async (e) => {
       body: JSON.stringify({
         name,
         applicantType,
+        phone,
         email,
+        recordDate,
         description,
       }),
     });
