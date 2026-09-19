@@ -107,7 +107,7 @@ router.post("/login", async (req, res) => {
 
     const { data: userRow, error: findError } = await supabase
       .from("users")
-      .select("id", "role")
+      .select("id, role")
       .eq("nickname", nickname)
       .single();
     if (findError || !userRow) {
