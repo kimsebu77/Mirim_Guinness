@@ -21,14 +21,8 @@ router.get("/", async (req, res) => {
 
 // 관리자: 기록 등록
 router.post("/", requireAuth, requireAdmin, async (req, res) => {
-  const {
-    holder_name,
-    record_value,
-    description,
-    photo_url,
-    youtube_url,
-    recorded_at,
-  } = req.body;
+  const { holder_name, record_value, photo_url, recorded_at, youtube_url } =
+    req.body;
 
   if (!holder_name || !record_value || !recorded_at) {
     return res.status(400).json({ message: "필수 항목을 입력해주세요." });
@@ -39,10 +33,9 @@ router.post("/", requireAuth, requireAdmin, async (req, res) => {
     .insert({
       holder_name,
       record_value,
-      description,
       photo_url,
-      youtube_url,
       recorded_at,
+      youtube_url,
     })
     .select()
     .single();
@@ -57,21 +50,14 @@ router.post("/", requireAuth, requireAdmin, async (req, res) => {
 
 // 관리자: 기록 수정
 router.put("/:id", requireAuth, requireAdmin, async (req, res) => {
-  const {
-    holder_name,
-    record_value,
-    description,
-    photo_url,
-    youtube_url,
-    recorded_at,
-  } = req.body;
+  const { holder_name, record_value, photo_url, youtube_url, recorded_at } =
+    req.body;
 
   const { data, error } = await supabase
     .from("records")
     .update({
       holder_name,
       record_value,
-      description,
       photo_url,
       youtube_url,
       recorded_at,

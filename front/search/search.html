@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="../banner/header.css" />
     <link rel="stylesheet" href="search.css" />
     <link rel="stylesheet" href="../footer/footer.css" />
+    <link rel="stylesheet" href="../shared/record-detail-modal.css" />
   </head>
   <body>
     <div id="header"></div>
@@ -15,35 +16,31 @@
         <h1>기록 검색</h1>
         <div class="search-box">
           <input
+            id="search-input"
             type="text"
             placeholder="검색어를 입력하세요"
             class="sizeing"
           />
-          <button onclick="">
-            <img src="./search-svgrepo-com.svg" width="25" height="25" />
+          <button id="search-btn" type="button">
+            <img
+              src="./search-svgrepo-com.svg"
+              width="25"
+              height="25"
+              alt="검색"
+            />
           </button>
         </div>
         <div class="record-list">
-          <ul>
-            <li>기록1</li>
-            <li>기록2</li>
-            <li>기록3</li>
-            <li>기록4</li>
-            <li>기록5</li>
-            <li>기록6</li>
-            <li>기록7</li>
-            <li>기록8</li>
-            <li>기록9</li>
-            <li>기록10</li>
-            <li>기록11</li>
-            <li>기록12</li>
-          </ul>
+          <ul id="record-list"></ul>
         </div>
+        <div id="pagination" class="pagination"></div>
       </div>
     </div>
     <div id="footer"></div>
 
     <script src="../banner/header.js"></script>
     <script src="../footer/footer.js"></script>
+    <script src="../shared/record-detail-modal.js"></script>
+    <script src="./search.js"></script>
   </body>
 </html>
