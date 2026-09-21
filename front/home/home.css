@@ -137,3 +137,63 @@ body {
 .next {
   right: 20px;
 }
+
+.record-news {
+  display: flex;
+  align-items: center;
+  margin: 40px auto 0;
+  width: 80%;
+  height: 45px;
+
+  border: 1px solid #eeeeee;
+  border-radius: 20px;
+
+  overflow: hidden;
+}
+
+.record-news-label {
+  flex-shrink: 0;
+
+  padding: 0 20px;
+
+  font-weight: bold;
+  color: #6fcf97;
+
+  border-right: 1px solid #dddddd;
+}
+
+.record-news-content {
+  flex: 1;
+
+  height: 45px;
+
+  padding: 0 20px;
+
+  overflow: hidden;
+}
+
+.record-news-track {
+  width: 100%;
+  height: 100%;
+
+  transition: transform 0.45s ease-in-out;
+}
+
+.record-news-track a {
+  display: flex;
+  align-items: center;
+
+  width: 100%;
+  height: 45px;
+
+  color: #333333;
+  text-decoration: none;
+
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.record-news-track a:hover {
+  text-decoration: underline;
+}

@@ -1,0 +1,50 @@
+.record-info {
+  width: 1000px;
+
+  margin: 80px auto;
+
+  text-align: center;
+}
+
+.record-info h1 {
+  margin-bottom: 50px;
+}
+
+#record-container {
+  padding: 50px;
+
+  background-color: #f5f5f5;
+
+  border-radius: 15px;
+
+  text-align: left;
+}
+
+.record-photo {
+  display: block;
+
+  width: 500px;
+  max-height: 500px;
+
+  object-fit: contain;
+
+  margin: 0 auto 40px;
+}
+
+.record-category {
+  font-size: 20px;
+  color: #666;
+}
+
+.record-holder {
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.record-value {
+  font-size: 24px;
+}
+
+.record-date {
+  color: #777;
+}
