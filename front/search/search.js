@@ -21,17 +21,29 @@ function showMessage(text) {
 
 function createItem(record) {
   const li = document.createElement("li");
+  li.tabIndex = 0;
+  li.setAttribute("role", "button");
 
   const holder = document.createElement("strong");
   holder.textContent = record.holder_name;
 
   const value = document.createElement("span");
-  value.textContent = ` ${record.record_value}`;
+  value.textContent = record.record_value;
 
   const date = document.createElement("small");
-  date.textContent = ` (${record.recorded_at})`;
+  date.textContent = record.recorded_at;
 
   li.append(holder, value, date);
+
+  // 카드 클릭 시 상세 모달 열기
+  li.addEventListener("click", () => openRecordModal(record));
+  li.addEventListener("keydown", (e) => {
+    if (e.key === "Enter" || e.key === " ") {
+      e.preventDefault();
+      openRecordModal(record);
+    }
+  });
+
   return li;
 }
 
