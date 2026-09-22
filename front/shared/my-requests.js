@@ -1,7 +1,7 @@
 const statusLabel = {
   pending: "심사 대기중",
   approved: "승인됨",
-  rejected: "반려됨",
+  rejected: "거절됨",
 };
 
 async function injectModal() {
@@ -76,6 +76,11 @@ async function loadMyRequests() {
       <span class="status-badge ${statusClass[req.status]}">${statusLabel[req.status]}</span>
     </div>
     <p class="request-item-desc">${req.description}</p>
+    ${
+      req.status === "rejected" && req.comment
+        ? `<p class="request-comment">사유: ${req.comment}</p>`
+        : ""
+    }
   `;
       listContainer.appendChild(item);
     });

@@ -151,6 +151,10 @@
   color: #1e7e34;
 }
 
+.status-returned {
+  background: #ffe0cc;
+  color: #a35b1e;
+}
 .status-rejected {
   background: #f8d7da;
   color: #a02834;
