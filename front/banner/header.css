@@ -13,11 +13,18 @@ body {
   height: 110px;
   background: white;
 }
-.banner img {
+.banner-logo {
   position: absolute;
   left: 20px;
   top: 50%;
   transform: translateY(-50%);
+  display: inline-block;
+  line-height: 0; /* a 태그 안 img 밑에 생기는 미세 여백 제거 */
+}
+
+.banner-logo img {
+  width: 100px;
+  display: block;
 }
 .banner h2 {
   margin: 0;
