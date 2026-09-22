@@ -13,10 +13,11 @@ body {
   height: 110px;
   background: white;
 }
-.banner > img {
+.banner img {
   position: absolute;
   left: 20px;
-  width: 45px;
+  top: 50%;
+  transform: translateY(-50%);
 }
 .banner h2 {
   margin: 0;
