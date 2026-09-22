@@ -1,11 +1,12 @@
 .footer {
   width: 100%;
-  margin-top: 200px;
+  margin-top: 100px;
   background-color: #f2f2f2;
 }
 
 .footer-container {
   width: 800px;
+  max-width: 90%;
   margin: 0 auto;
   padding: 30px 0;
 
@@ -16,37 +17,66 @@
 
 .footer-brand {
   width: 100%;
-  height: 100px;
+  margin-bottom: 30px;
   text-align: center;
 }
 
-.footer-section {
-  width: 400px;
-  text-align: center;
-}
-
-.footer-brand h2 {
-  margin: 0 0 15px;
+.footer-brand h3 {
+  margin: 0;
   font-size: 26px;
   font-weight: bold;
+  color: #222;
 }
 
-.footer-brand p {
-  margin: 0;
-  color: #666;
-  font-size: 14px;
-  line-height: 2;
+/* SNS 아이콘 */
+
+.sns-section {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  margin-bottom: 30px;
+}
+
+.sns-section a {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  color: #444;
+  text-decoration: none;
+}
+
+.sns-section svg {
+  display: block;
+  width: 30px;
+  height: 30px;
+}
+
+/* 팀 정보 */
+
+.footer-section {
+  display: block;
+  width: 400px;
+  max-width: 100%;
+
+  text-align: center;
+  color: #444;
 }
 
 .footer-section h3 {
+  display: block;
   margin: 0 0 20px;
-  font-size: 13px;
+
+  font-size: 18px;
   font-weight: bold;
   color: #e53935;
 }
 
 .footer-section p {
+  display: block;
   margin: 8px 0;
+
   font-size: 14px;
   color: #444;
 }
@@ -58,4 +88,26 @@
 
 .footer-section a:hover {
   text-decoration: underline;
+}
+
+.sns-section {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+  margin: 20px;
+}
+
+.sns-section a {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 30px;
+  height: 30px;
+}
+
+.sns-section svg {
+  display: block;
+  width: 30px;
+  height: 30px;
 }

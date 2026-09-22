@@ -1,50 +1,169 @@
+/* 전체 페이지 */
+
 .record-info {
   width: 1000px;
-
-  margin: 80px auto;
-
+  margin: 50px auto 80px;
   text-align: center;
 }
 
+/* 기록 제목 */
+
 .record-info h1 {
-  margin-bottom: 50px;
+  margin-bottom: 40px;
+  font-size: 32px;
 }
+
+/* 기록 전체 박스 */
 
 #record-container {
-  padding: 50px;
-
+  padding: 50px 70px;
   background-color: #f5f5f5;
-
   border-radius: 15px;
-
-  text-align: left;
+  box-sizing: border-box;
 }
+
+/* 사진 */
 
 .record-photo {
   display: block;
 
   width: 500px;
-  max-height: 500px;
+  height: 300px;
 
   object-fit: contain;
 
-  margin: 0 auto 40px;
+  margin: 0 auto 50px;
 }
 
-.record-category {
+/* 사진이 없는 경우 */
+
+.no-photo {
+  display: flex;
+
+  justify-content: center;
+  align-items: center;
+
+  width: 500px;
+  height: 300px;
+
+  margin: 0 auto 50px;
+
+  background-color: white;
+
+  border: 1px solid #ddd;
+  box-sizing: border-box;
+
+  color: #888;
   font-size: 20px;
-  color: #666;
 }
+
+/* 기록 설명 */
+
+.record-description {
+  margin: 0 auto 60px;
+  padding: 20px 25px;
+  white-space: pre-line;
+}
+
+/* 기록 정보 영역 */
+
+.record-info-grid {
+  display: grid;
+
+  grid-template-columns: 1fr 1fr;
+
+  column-gap: 80px;
+  row-gap: 30px;
+
+  text-align: left;
+}
+
+/* 각각의 정보 */
+
+.record-item {
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 8px;
+}
+
+/* 정보 이름 */
+
+.record-label {
+  font-size: 16px;
+  color: #777;
+}
+
+/* 기록자 */
 
 .record-holder {
-  font-size: 28px;
+  font-size: 24px;
   font-weight: bold;
 }
 
+/* 기록 */
+
 .record-value {
   font-size: 24px;
+  font-weight: bold;
+}
+
+/* 기록 달성일 */
+
+.record-date-item {
+  grid-column: 1 / -1;
+
+  padding-top: 20px;
+
+  border-top: 1px solid #ddd;
 }
 
 .record-date {
+  font-size: 18px;
   color: #777;
+}
+
+/* 화면이 작아졌을 때 */
+
+@media (max-width: 1100px) {
+  .record-info {
+    width: 90%;
+  }
+
+  #record-container {
+    padding: 40px;
+  }
+}
+
+/* 모바일 */
+
+@media (max-width: 700px) {
+  .record-info {
+    width: 90%;
+  }
+
+  .record-info h1 {
+    font-size: 28px;
+  }
+
+  #record-container {
+    padding: 30px 20px;
+  }
+
+  .record-photo,
+  .no-photo {
+    width: 100%;
+    height: 250px;
+  }
+
+  .record-info-grid {
+    grid-template-columns: 1fr;
+
+    column-gap: 0;
+  }
+
+  .record-date-item {
+    grid-column: auto;
+  }
 }
