@@ -52,35 +52,48 @@ body {
   list-style: none;
 }
 
+/* ===== 기록 카드 (하나로 합침) ===== */
 .record-list li {
   height: 200px;
+  padding: 20px;
+  box-sizing: border-box;
 
   background-color: #f5f5f5;
-
   border-radius: 10px;
 
   overflow: hidden;
+  word-break: break-all;
 }
 
 .record-list li:hover {
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-
   transition: all 0.3s ease;
 }
 
-.record-list a {
-  display: flex;
+.record-list li strong {
+  display: block;
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+.record-list li span {
+  display: block;
+}
+.record-list li small {
+  display: block;
+  margin-top: 10px;
+  color: #888;
+}
 
-  width: 100%;
-  height: 100%;
-
-  align-items: center;
-  justify-content: center;
-
-  color: black;
-  text-decoration: none;
-
-  cursor: pointer;
+/* 안내 문구는 3열 전체를 차지하는 일반 텍스트로 */
+.record-list li.record-empty {
+  grid-column: 1 / -1;
+  height: auto;
+  padding: 20px;
+  background: transparent;
+  color: #888;
+}
+.record-list li.record-empty:hover {
+  box-shadow: none;
 }
 
 .search-box input,
@@ -96,6 +109,7 @@ body {
 .search-box:has(input:hover, button:hover) button {
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
+
 .pagination {
   display: flex;
   justify-content: center;
@@ -122,34 +136,4 @@ body {
 .pagination button:disabled {
   opacity: 0.4;
   cursor: default;
-}
-.record-list li {
-  box-sizing: border-box; /* padding 때문에 실제 높이가 280px이 되는 것을 방지 */
-  overflow: hidden;
-  word-break: break-all;
-}
-.record-list li strong {
-  display: block;
-  font-size: 18px;
-  margin-bottom: 10px;
-}
-.record-list li span {
-  display: block;
-}
-.record-list li small {
-  display: block;
-  margin-top: 10px;
-  color: #888;
-}
-
-/* 안내 문구는 3열 전체를 차지하는 일반 텍스트로 */
-.record-list li.record-empty {
-  grid-column: 1 / -1;
-  height: auto;
-  padding: 20px;
-  background: transparent;
-  color: #888;
-}
-.record-list li.record-empty:hover {
-  box-shadow: none;
 }
