@@ -1,144 +1,162 @@
 const recordContainer = document.getElementById("record-container");
 const recordTitle = document.getElementById("record-title");
 
-const DUMMY_MODE = true;
-
 const params = new URLSearchParams(window.location.search);
 const id = params.get("id");
 
-if (DUMMY_MODE) {
-  const data = {
-    record_name: "가장 노트북에 스티커가 많은 사람",
-    category: "기타",
-    holder_name: "강태인",
-    record_value: "스티커 37개",
-
-    description:
-      "미림마이스터고 학생 중 노트북에 가장 많은 스티커를 붙인 사람을 선정했다. \n노트북에 붙어 있는것이 확인 가능한 스티커의 개수를 기준으로 기록을 측정했다.",
-
-    photo_url: "",
-    recorded_at: "2026-09-21",
-  };
-
-  displayRecord(data);
-} else {
-  if (!id) {
-    recordContainer.innerHTML = `
-      <p>잘못된 기록입니다.</p>
-    `;
-  } else {
-    loadRecord(id);
+function isHttpUrl(value) {
+  try {
+    const url = new URL(value);
+    return url.protocol === "http:" || url.protocol === "https:";
+  } catch {
+    return false;
   }
 }
 
-// Supabase에서 기록 가져오기
+// 유튜브 주소에서 영상 ID만 뽑아냄 (실패하면 null)
+function getYouTubeId(value) {
+  try {
+    const url = new URL(value);
+    const host = url.hostname.replace(/^www\./, "");
+    let vid = null;
 
-async function loadRecord(id) {
-  const { data, error } = await supabase
-    .from("records")
-    .select("*")
-    .eq("id", id)
-    .single();
+    if (host === "youtu.be") {
+      vid = url.pathname.slice(1);
+    } else if (host === "youtube.com" || host === "m.youtube.com") {
+      if (url.pathname === "/watch") {
+        vid = url.searchParams.get("v");
+      } else if (
+        url.pathname.startsWith("/shorts/") ||
+        url.pathname.startsWith("/embed/")
+      ) {
+        vid = url.pathname.split("/")[2];
+      }
+    }
 
-  if (error) {
-    console.error("기록을 불러오는 중 오류 발생:", error);
-
-    recordContainer.innerHTML = `
-      <p>기록을 불러오지 못했습니다.</p>
-    `;
-
-    return;
+    return vid && /^[\w-]{11}$/.test(vid) ? vid : null;
+  } catch {
+    return null;
   }
+}
 
-  displayRecord(data);
+if (!id) {
+  showMessage("잘못된 접근입니다.");
+} else {
+  loadRecord(id);
+}
+
+function showMessage(text) {
+  recordContainer.replaceChildren();
+  const p = document.createElement("p");
+  p.textContent = text;
+  recordContainer.appendChild(p);
+}
+
+// 백엔드 API에서 기록 가져오기
+async function loadRecord(recordId) {
+  showMessage("기록을 불러오는 중...");
+
+  try {
+    const res = await fetch("http://localhost:3000/api/records");
+    const result = await res.json();
+
+    if (!res.ok) {
+      showMessage(result.message);
+      return;
+    }
+
+    const data = result.find((r) => String(r.id) === recordId);
+
+    if (!data) {
+      showMessage("기록을 찾을 수 없습니다.");
+      return;
+    }
+
+    displayRecord(data);
+  } catch (error) {
+    console.error("기록을 불러오는 중 오류 발생:", error);
+    showMessage("서버에 연결할 수 없습니다.");
+  }
 }
 
 // 기록 화면에 출력
-
 function displayRecord(data) {
-  // 기록 이름을 제목으로 사용
-  recordTitle.textContent = data.record_name;
+  document.title = `${data.holder_name} - 기록 정보`;
+  recordTitle.textContent = data.holder_name;
+  recordContainer.replaceChildren();
 
   // 사진
+  if (data.photo_url && isHttpUrl(data.photo_url)) {
+    const img = document.createElement("img");
+    img.src = data.photo_url;
+    img.alt = data.holder_name;
+    img.className = "record-photo";
+    img.addEventListener("error", () => {
+      img.replaceWith(createNoPhoto());
+    });
+    recordContainer.appendChild(img);
+  } else {
+    recordContainer.appendChild(createNoPhoto());
+  }
 
-  const photo = data.photo_url
-    ? `
-      <img
-        src="${data.photo_url}"
-        alt="${data.record_name}"
-        class="record-photo"
-      />
-    `
-    : `
-      <div class="record-photo no-photo">
-        사진
-      </div>
-    `;
+  // 유튜브 영상
+  // if (data.youtube_url && isHttpUrl(data.youtube_url)) {
+  //   const videoId = getYouTubeId(data.youtube_url);
 
-  // 설명
+  //   if (videoId) {
+  //     const frame = document.createElement("iframe");
+  //     frame.src = `https://www.youtube-nocookie.com/embed/${videoId}`;
+  //     frame.className = "record-video";
+  //     frame.title = `${data.holder_name}의 기록 영상`;
+  //     frame.allow = "encrypted-media; picture-in-picture; fullscreen";
+  //     frame.allowFullscreen = true;
+  //     frame.referrerPolicy = "strict-origin-when-cross-origin";
+  //     frame.loading = "lazy";
+  //     recordContainer.appendChild(frame);
+  //   } else {
+  //     const link = document.createElement("a");
+  //     link.href = data.youtube_url;
+  //     link.target = "_blank";
+  //     link.rel = "noopener noreferrer";
+  //     link.textContent = "▶ 영상 보러가기";
+  //     link.className = "record-video-link";
+  //     recordContainer.appendChild(link);
+  //   }
+  // }
 
-  const description = data.description
-    ? `
-      <div class="record-description">
-        ${data.description}
-      </div>
-    `
-    : "";
+  // 정보 그리드
+  const grid = document.createElement("div");
+  grid.className = "record-info-grid";
 
-  // 전체 내용
+  grid.appendChild(createItem("기록자", data.holder_name));
+  grid.appendChild(createItem("기록", data.record_value));
 
-  recordContainer.innerHTML = `
-    ${photo}
+  const dateItem = createItem("기록 달성일", data.recorded_at);
+  dateItem.classList.add("record-date-item");
+  grid.appendChild(dateItem);
 
-    ${description}
+  recordContainer.appendChild(grid);
+}
 
+function createNoPhoto() {
+  const div = document.createElement("div");
+  div.className = "record-photo no-photo";
+  div.textContent = "사진";
+  return div;
+}
 
-    <div class="record-info-grid">
+function createItem(label, value) {
+  const item = document.createElement("div");
+  item.className = "record-item";
 
-      <!-- 기록자 -->
+  const labelEl = document.createElement("span");
+  labelEl.className = "record-label";
+  labelEl.textContent = label;
 
-      <div class="record-item">
+  const valueEl = document.createElement("span");
+  valueEl.className = "record-value";
+  valueEl.textContent = value;
 
-        <span class="record-label">
-          기록자
-        </span>
-
-        <span class="record-holder">
-          ${data.holder_name}
-        </span>
-
-      </div>
-
-
-      <!-- 기록 -->
-
-      <div class="record-item">
-
-        <span class="record-label">
-          기록
-        </span>
-
-        <span class="record-value">
-          ${data.record_value}
-        </span>
-
-      </div>
-
-
-      <!-- 기록 달성일 -->
-
-      <div class="record-item record-date-item">
-
-        <span class="record-label">
-          기록 달성일
-        </span>
-
-        <span class="record-date">
-          ${data.recorded_at}
-        </span>
-
-      </div>
-
-    </div>
-  `;
+  item.append(labelEl, valueEl);
+  return item;
 }

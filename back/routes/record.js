@@ -188,5 +188,50 @@ router.get("/my-requests", requireAuth, async (req, res) => {
     res.status(500).json({ message: "서버 오류가 발생했습니다." });
   }
 });
+function parseRecordBody(body) {
+  const record_name = String(body.record_name ?? "").trim();
+  const holder_name = String(body.holder_name ?? "").trim();
+  const record_value = String(body.record_value ?? "").trim();
+  const description = String(body.description ?? "").trim();
+  const photo_url = String(body.photo_url ?? "").trim();
+  const youtube_url = String(body.youtube_url ?? "").trim();
+  const recorded_at = String(body.recorded_at ?? "").trim();
 
+  if (!record_name || !holder_name || !record_value || !recorded_at) {
+    return { error: "필수 항목을 입력해주세요." };
+  }
+  if (record_name.length > 100) {
+    return { error: "기록 제목은 100자 이하로 입력해주세요." };
+  }
+  if (holder_name.length > 50) {
+    return { error: "기록 보유자는 50자 이하로 입력해주세요." };
+  }
+  if (record_value.length > 100) {
+    return { error: "기록 값은 100자 이하로 입력해주세요." };
+  }
+  if (description.length > 500) {
+    return { error: "설명은 500자 이하로 입력해주세요." };
+  }
+  if (!isValidDate(recorded_at)) {
+    return { error: "기록 날짜 형식이 올바르지 않습니다." };
+  }
+  if (photo_url && !isHttpUrl(photo_url)) {
+    return { error: "사진 URL은 http 또는 https 주소여야 합니다." };
+  }
+  if (youtube_url && !isHttpUrl(youtube_url)) {
+    return { error: "유튜브 URL은 http 또는 https 주소여야 합니다." };
+  }
+
+  return {
+    value: {
+      record_name,
+      holder_name,
+      record_value,
+      description: description || null,
+      photo_url: photo_url || null,
+      youtube_url: youtube_url || null,
+      recorded_at,
+    },
+  };
+}
 module.exports = router;

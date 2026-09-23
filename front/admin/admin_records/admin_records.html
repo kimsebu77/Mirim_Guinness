@@ -23,13 +23,33 @@
           <input type="hidden" id="record-id" />
 
           <div class="form-group">
+            <label>기록 제목</label>
+            <input
+              type="text"
+              id="record-name"
+              placeholder="제목을 입력하세요"
+              required
+            />
+          </div>
+
+          <div class="form-group">
             <label>기록 보유자</label>
-            <input type="text" id="holder-name" required />
+            <input
+              type="text"
+              id="holder-name"
+              placeholder="이름을 입력하세요"
+              required
+            />
           </div>
 
           <div class="form-group">
             <label>기록 값</label>
-            <input type="text" id="record-value" required />
+            <input
+              type="text"
+              id="record-value"
+              placeholder="기록을 입력하세요"
+              required
+            />
           </div>
 
           <div class="form-group">
@@ -73,32 +93,6 @@
     <script src="../admin_header/admin_header.js"></script>
     <script src="./admin_records.js" defer></script>
     <script>
-      // ===== 더미 데이터 (DB 연결 전 임시) =====
-      let records = [
-        {
-          id: "1",
-          holder_name: "홍길동",
-          record_value: "팔굽혀펴기 100개",
-          description: "",
-          photo_url: "",
-          youtube_url: "",
-          recorded_at: "2026-09-10",
-          created_at: "2026-09-10T12:00:00Z",
-        },
-        {
-          id: "2",
-          holder_name: "이영희",
-          record_value: "종이학 500개 접기",
-          description: "",
-          photo_url: "",
-          youtube_url: "",
-          recorded_at: "2026-09-12",
-          created_at: "2026-09-12T09:30:00Z",
-        },
-      ];
-
-      // ===== DB 연동 지점 (담당자가 이 3개 함수 내부만 교체하면 됨) =====
-
       async function fetchRecords() {
         const res = await fetch("http://localhost:3000/api/records");
         return await res.json();
@@ -139,51 +133,65 @@
 
       // ===== 렌더링 =====
 
+      function createEl(tag, className, text) {
+        const el = document.createElement(tag);
+        if (className) el.className = className;
+        if (text !== undefined) el.textContent = text;
+        return el;
+      }
+
       function createRecordCard(record) {
-        const card = document.createElement("div");
-        card.className = "record-card";
+        const card = createEl("div", "record-card");
         card.dataset.id = record.id;
 
-        card.innerHTML = `
-    ${
-      record.photo_url
-        ? `<img src="${record.photo_url}" class="record-photo" alt="${record.holder_name}" />`
-        : `<div class="record-photo record-photo-empty">사진 없음</div>`
-    }
-    <div class="record-body">
-      <span class="record-holder">${record.holder_name}</span>
-      <span class="record-value">${record.record_value}</span>
-      ${
-        record.description
-          ? `<span class="record-desc">${record.description}</span>`
-          : ""
-      }
-      <span class="record-date">${record.recorded_at}</span>
-      ${
-        record.youtube_url
-          ? `<a href="${record.youtube_url}" target="_blank" class="record-youtube">▶ 유튜브 보기</a>`
-          : ""
-      }
-    </div>
-    <div class="record-actions">
-      <button class="btn-edit" data-action="edit">수정</button>
-      <button class="btn-delete" data-action="delete">삭제</button>
-    </div>
-  `;
+        if (record.photo_url) {
+          const img = document.createElement("img");
+          img.src = record.photo_url;
+          img.alt = record.holder_name;
+          img.className = "record-photo";
+          card.appendChild(img);
+        } else {
+          card.appendChild(
+            createEl("div", "record-photo record-photo-empty", "사진 없음"),
+          );
+        }
 
-        card
-          .querySelector(".btn-edit")
-          .addEventListener("click", () => openModal(record));
-        card
-          .querySelector(".btn-delete")
-          .addEventListener("click", () => handleDelete(record.id));
+        const body = createEl("div", "record-body");
+        if (record.record_name) {
+          body.appendChild(createEl("span", "record-name", record.record_name));
+        }
+        body.appendChild(createEl("span", "record-holder", record.holder_name));
+        body.appendChild(createEl("span", "record-value", record.record_value));
+        if (record.description) {
+          body.appendChild(createEl("span", "record-desc", record.description));
+        }
+        body.appendChild(createEl("span", "record-date", record.recorded_at));
+        if (record.youtube_url) {
+          const link = document.createElement("a");
+          link.href = record.youtube_url;
+          link.target = "_blank";
+          link.rel = "noopener noreferrer";
+          link.className = "record-youtube";
+          link.textContent = "▶ 유튜브 보기";
+          body.appendChild(link);
+        }
 
+        const actions = createEl("div", "record-actions");
+        const editBtn = createEl("button", "btn-edit", "수정");
+        editBtn.dataset.action = "edit";
+        editBtn.addEventListener("click", () => openModal(record));
+        const deleteBtn = createEl("button", "btn-delete", "삭제");
+        deleteBtn.dataset.action = "delete";
+        deleteBtn.addEventListener("click", () => handleDelete(record.id));
+        actions.append(editBtn, deleteBtn);
+
+        card.append(body, actions);
         return card;
       }
 
       async function renderRecords() {
         const container = document.getElementById("records-container");
-        container.innerHTML = "";
+        container.replaceChildren();
 
         const data = await fetchRecords();
         const sorted = [...data].sort(
@@ -206,6 +214,8 @@
           : "기록 추가";
 
         document.getElementById("record-id").value = record?.id ?? "";
+        document.getElementById("record-name").value =
+          record?.record_name ?? "";
         document.getElementById("holder-name").value =
           record?.holder_name ?? "";
         document.getElementById("record-value").value =
@@ -237,8 +247,10 @@
 
         const record = {
           id: document.getElementById("record-id").value || null,
+          record_name: document.getElementById("record-name").value,
           holder_name: document.getElementById("holder-name").value,
           record_value: document.getElementById("record-value").value,
+          description: document.getElementById("description").value,
           photo_url: document.getElementById("photo-url").value,
           youtube_url: document.getElementById("youtube-url").value,
           recorded_at: document.getElementById("recorded-at").value,

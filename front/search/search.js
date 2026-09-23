@@ -18,7 +18,9 @@ function showMessage(text) {
   li.textContent = text;
   list.appendChild(li);
 }
-
+function goToRecordInfo(record) {
+  location.href = `../record_info/record_info.html?id=${encodeURIComponent(record.id)}`;
+}
 function createItem(record) {
   const li = document.createElement("li");
   li.tabIndex = 0;
@@ -35,12 +37,11 @@ function createItem(record) {
 
   li.append(holder, value, date);
 
-  // 카드 클릭 시 상세 모달 열기
-  li.addEventListener("click", () => openRecordModal(record));
+  li.addEventListener("click", () => goToRecordInfo(record));
   li.addEventListener("keydown", (e) => {
     if (e.key === "Enter" || e.key === " ") {
       e.preventDefault();
-      openRecordModal(record);
+      goToRecordInfo(record);
     }
   });
 
