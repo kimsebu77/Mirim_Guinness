@@ -82,7 +82,7 @@ async function loadRecord(recordId) {
 // 기록 화면에 출력
 function displayRecord(data) {
   document.title = `${data.holder_name} - 기록 정보`;
-  recordTitle.textContent = data.holder_name;
+  recordTitle.textContent = data.record_name;
   recordContainer.replaceChildren();
 
   // 사진
@@ -97,6 +97,13 @@ function displayRecord(data) {
     recordContainer.appendChild(img);
   } else {
     recordContainer.appendChild(createNoPhoto());
+  }
+
+  if (data.description) {
+    const desc = document.createElement("div");
+    desc.className = "record-description";
+    desc.textContent = data.description;
+    recordContainer.appendChild(desc);
   }
 
   // 유튜브 영상
