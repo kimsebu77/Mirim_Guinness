@@ -4,7 +4,6 @@
   align-items: center;
   text-align: center;
 }
-
 .con {
   display: flex;
   gap: 30px;
@@ -21,37 +20,26 @@
 
 .input-group label {
   font-size: 15px;
-  font-weight: 600;
-  color: #333;
+  font-weight: bold;
 }
-
 .myrecord-link {
   margin-top: 20px;
+
   color: #555;
   text-decoration: none;
+
   font-size: 15px;
 }
-
-.myrecord-link:hover {
-  color: #2f8a5c;
-  text-decoration: underline;
-}
-
 .con-input {
   width: 500px;
-  height: 48px;
+  height: 50px;
   box-sizing: border-box;
-  border-radius: 7px;
-  padding: 10px 14px;
-  border: 1px solid #ccc;
-  background-color: #fff;
-  font-size: 14px;
-  transition: border-color 0.2s ease;
+  border-radius: 15px;
+  padding: 10px 12px;
+  border: 1px solid #bbb;
 }
-
 .con-input:focus {
   outline: none;
-  border-color: #6fcf97;
 }
 
 .email-box {
@@ -60,40 +48,30 @@
 
 .email-box .con-input {
   width: 386px;
-  border-radius: 7px 0 0 7px;
+  border-radius: 15px 0 0 15px;
 }
 
 .email-box select {
-  height: 48px;
+  height: 50px;
   width: 114px;
-  border: 1px solid #ccc;
+  border: 1px solid #bbb;
   border-left: none;
-  border-radius: 0 7px 7px 0;
-  background-color: #fff;
-  padding: 0 10px;
-  font-size: 14px;
+  border-radius: 0 15px 15px 0;
 }
-
 .email-box select:focus {
   outline: none;
-  border-color: #6fcf97;
 }
 
 .rbutton {
   margin-top: 30px;
   width: 300px;
-  height: 48px;
-  border-radius: 7px;
-  background: #6fcf97;
+  height: 50px;
+  border-radius: 15px;
+  background: #176b45;
   color: white;
-  border: none;
+  border: 1px solid #bbb;
   box-sizing: border-box;
-  cursor: pointer;
-  font-size: 15px;
-  font-weight: 600;
-  transition: background-color 0.2s ease;
 }
-
 .rbutton:hover {
-  background: #58b982;
+  background: #12583a;
 }
