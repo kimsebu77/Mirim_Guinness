@@ -18,24 +18,42 @@ function showMessage(text) {
   li.textContent = text;
   list.appendChild(li);
 }
+
 function goToRecordInfo(record) {
   location.href = `../record_info/record_info.html?id=${encodeURIComponent(record.id)}`;
 }
+
+// 등록된 지 24시간 이내인 기록인지 확인
+function isNewRecord(dateStr) {
+  const recordDate = new Date(dateStr);
+  if (isNaN(recordDate)) return false;
+
+  const diffMs = Date.now() - recordDate.getTime();
+  return diffMs >= 0 && diffMs <= 24 * 60 * 60 * 1000;
+}
+
 function createItem(record) {
   const li = document.createElement("li");
   li.tabIndex = 0;
   li.setAttribute("role", "button");
 
-  const holder = document.createElement("strong");
-  holder.textContent = record.holder_name;
+  const title = document.createElement("strong");
+  title.textContent = record.record_name;
 
-  const value = document.createElement("span");
-  value.textContent = record.record_value;
+  const holder = document.createElement("span");
+  holder.textContent = `기록자: ${record.holder_name}`;
 
   const date = document.createElement("small");
   date.textContent = record.recorded_at;
 
-  li.append(holder, value, date);
+  li.append(title, holder, date);
+
+  if (isNewRecord(record.recorded_at)) {
+    const badge = document.createElement("span");
+    badge.className = "new-badge";
+    badge.textContent = "NEW!";
+    li.appendChild(badge);
+  }
 
   li.addEventListener("click", () => goToRecordInfo(record));
   li.addEventListener("keydown", (e) => {
@@ -114,7 +132,7 @@ function search() {
 
   currentList = keyword
     ? allRecords.filter((r) =>
-        [r.holder_name, r.record_value, r.recorded_at]
+        [r.record_name, r.holder_name, r.recorded_at]
           .join(" ")
           .toLowerCase()
           .includes(keyword),

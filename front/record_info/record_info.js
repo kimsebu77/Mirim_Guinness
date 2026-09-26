@@ -13,7 +13,6 @@ function isHttpUrl(value) {
   }
 }
 
-// 유튜브 주소에서 영상 ID만 뽑아냄 (실패하면 null)
 function getYouTubeId(value) {
   try {
     const url = new URL(value);
@@ -47,12 +46,13 @@ if (!id) {
 
 function showMessage(text) {
   recordContainer.replaceChildren();
+
   const p = document.createElement("p");
   p.textContent = text;
+
   recordContainer.appendChild(p);
 }
 
-// 백엔드 API에서 기록 가져오기
 async function loadRecord(recordId) {
   showMessage("기록을 불러오는 중...");
 
@@ -79,21 +79,23 @@ async function loadRecord(recordId) {
   }
 }
 
-// 기록 화면에 출력
 function displayRecord(data) {
   document.title = `${data.holder_name} - 기록 정보`;
   recordTitle.textContent = data.record_name;
+
   recordContainer.replaceChildren();
 
-  // 사진
   if (data.photo_url && isHttpUrl(data.photo_url)) {
     const img = document.createElement("img");
+
     img.src = data.photo_url;
     img.alt = data.holder_name;
     img.className = "record-photo";
+
     img.addEventListener("error", () => {
       img.replaceWith(createNoPhoto());
     });
+
     recordContainer.appendChild(img);
   } else {
     recordContainer.appendChild(createNoPhoto());
@@ -101,69 +103,119 @@ function displayRecord(data) {
 
   if (data.description) {
     const desc = document.createElement("div");
+
     desc.className = "record-description";
     desc.textContent = data.description;
+
     recordContainer.appendChild(desc);
   }
 
-  // 유튜브 영상
-  // if (data.youtube_url && isHttpUrl(data.youtube_url)) {
-  //   const videoId = getYouTubeId(data.youtube_url);
-
-  //   if (videoId) {
-  //     const frame = document.createElement("iframe");
-  //     frame.src = `https://www.youtube-nocookie.com/embed/${videoId}`;
-  //     frame.className = "record-video";
-  //     frame.title = `${data.holder_name}의 기록 영상`;
-  //     frame.allow = "encrypted-media; picture-in-picture; fullscreen";
-  //     frame.allowFullscreen = true;
-  //     frame.referrerPolicy = "strict-origin-when-cross-origin";
-  //     frame.loading = "lazy";
-  //     recordContainer.appendChild(frame);
-  //   } else {
-  //     const link = document.createElement("a");
-  //     link.href = data.youtube_url;
-  //     link.target = "_blank";
-  //     link.rel = "noopener noreferrer";
-  //     link.textContent = "▶ 영상 보러가기";
-  //     link.className = "record-video-link";
-  //     recordContainer.appendChild(link);
-  //   }
-  // }
-
-  // 정보 그리드
   const grid = document.createElement("div");
+
   grid.className = "record-info-grid";
 
   grid.appendChild(createItem("기록자", data.holder_name));
   grid.appendChild(createItem("기록", data.record_value));
 
   const dateItem = createItem("기록 달성일", data.recorded_at);
-  dateItem.classList.add("record-date-item");
-  grid.appendChild(dateItem);
 
+  dateItem.classList.add("record-date-item");
+
+  grid.appendChild(dateItem);
   recordContainer.appendChild(grid);
+
+  const divider = document.createElement("div");
+
+  divider.className = "record-video-divider";
+
+  recordContainer.appendChild(divider);
+
+  const heading = document.createElement("div");
+
+  heading.className = "record-video-heading";
+  heading.textContent = "기록 영상 ▼";
+
+  recordContainer.appendChild(heading);
+  recordContainer.appendChild(createVideoArea(data));
+}
+
+function createVideoArea(data) {
+  const videoId =
+    data.youtube_url && isHttpUrl(data.youtube_url)
+      ? getYouTubeId(data.youtube_url)
+      : null;
+
+  if (videoId) {
+    const wrapper = document.createElement("div");
+
+    wrapper.className = "record-video-wrapper";
+
+    const frame = document.createElement("iframe");
+
+    frame.src = `https://www.youtube-nocookie.com/embed/${videoId}`;
+    frame.className = "record-video";
+    frame.title = `${data.holder_name}의 기록 영상`;
+    frame.allow = "encrypted-media; picture-in-picture; fullscreen";
+    frame.allowFullscreen = true;
+    frame.referrerPolicy = "strict-origin-when-cross-origin";
+    frame.loading = "lazy";
+
+    wrapper.appendChild(frame);
+
+    return wrapper;
+  }
+
+  if (data.youtube_url && isHttpUrl(data.youtube_url)) {
+    const wrapper = document.createElement("div");
+
+    wrapper.className = "record-video-wrapper no-video";
+
+    const link = document.createElement("a");
+
+    link.href = data.youtube_url;
+    link.target = "_blank";
+    link.rel = "noopener noreferrer";
+    link.textContent = "▶ 영상 보러가기";
+    link.className = "record-video-link";
+
+    wrapper.appendChild(link);
+
+    return wrapper;
+  }
+
+  const wrapper = document.createElement("div");
+
+  wrapper.className = "record-video-wrapper no-video";
+  wrapper.textContent = "영상 없음";
+
+  return wrapper;
 }
 
 function createNoPhoto() {
   const div = document.createElement("div");
+
   div.className = "record-photo no-photo";
   div.textContent = "사진";
+
   return div;
 }
 
 function createItem(label, value) {
   const item = document.createElement("div");
+
   item.className = "record-item";
 
   const labelEl = document.createElement("span");
+
   labelEl.className = "record-label";
   labelEl.textContent = label;
 
   const valueEl = document.createElement("span");
+
   valueEl.className = "record-value";
   valueEl.textContent = value;
 
   item.append(labelEl, valueEl);
+
   return item;
 }
