@@ -6,8 +6,6 @@ body {
   text-align: center;
 }
 
-/* ===== 검색창 ===== */
-
 .search-box {
   display: flex;
   justify-content: center;
@@ -56,8 +54,6 @@ body {
   filter: drop-shadow(0 4px 14px rgba(111, 207, 151, 0.35));
 }
 
-/* ===== 기록 카드 그리드 ===== */
-
 .record-list ul {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -68,93 +64,130 @@ body {
   list-style: none;
 }
 
-/* ===== 기록 카드 ===== */
-
 .record-list li {
   position: relative;
-  height: 190px;
-  padding: 70px 22px 20px;
+  height: 195px;
+  padding: 10px 20px 12px;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
-  gap: 10px;
+  align-items: flex-start;
   background-color: #ffffff;
-  border-radius: 18px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.06);
+  border-radius: 0;
+  border: 1px solid #e5e5e5;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
   cursor: pointer;
   transition:
     transform 0.2s ease,
     box-shadow 0.2s ease;
   overflow: hidden;
   word-break: break-all;
-}
-
-.record-list li::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 40px;
-  border-radius: 18px 18px 0 0;
-  background: #6fcf97;
+  text-align: left;
 }
 
 .record-list li:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 10px 22px rgba(111, 207, 151, 0.28);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.08);
+}
+
+.record-list li::before {
+  display: none;
+}
+
+.new-badge {
+  display: block;
+  width: 100%;
+  height: 14px;
+  margin-bottom: 5px;
+  padding: 0;
+  box-sizing: border-box;
+  color: #ff6b5f;
+  font-size: 12px;
+  line-height: 14px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  text-align: left;
+}
+
+.new-badge.hidden {
+  visibility: hidden;
 }
 
 .record-list li strong {
   display: block;
-  font-size: 19px;
+  width: 100%;
+  height: 25px;
+  min-height: 25px;
+  font-size: 21px;
+  line-height: 25px;
   font-weight: 700;
-  color: #222;
-  margin-bottom: 0;
+  color: green;
+  margin-bottom: 5px;
+  text-align: left;
   overflow: hidden;
   text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.record-list li strong.empty-title {
+  visibility: hidden;
+}
+
+.record-list li span:not(.new-badge) {
+  display: block;
+  width: 100%;
+  height: 19px;
+  font-size: 13px;
+  line-height: 19px;
+  font-weight: 500;
+  color: #333;
+  background-color: transparent;
+  padding: 0;
+  border-radius: 0;
+  text-align: left;
+}
+
+.record-description {
+  width: 100%;
+  height: 32px;
+  margin-top: 3px;
+  font-size: 13px;
+  line-height: 16px;
+  color: #777;
+  text-align: left;
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
-}
-
-.record-list li span {
-  display: inline-block;
-  width: fit-content;
-  font-size: 13px;
-  font-weight: 600;
-  color: #2f8a5c;
-  background-color: #e7f7ee;
-  padding: 4px 10px;
-  border-radius: 999px;
+  overflow: hidden;
 }
 
 .record-list li small {
   display: block;
-  margin-top: 0;
+  width: 100%;
+  height: 17px;
+  margin-top: auto;
   padding-top: 0;
   font-size: 12px;
+  line-height: 17px;
   color: #999;
+  text-align: left;
 }
 
-/* NEW 배지 */
-
-.new-badge {
-  position: absolute;
-  top: 50px;
-  right: 16px;
-  background: linear-gradient(135deg, #ff8a65, #ff5252);
-  color: white;
-  font-size: 11px;
-  font-weight: 800;
-  letter-spacing: 0.02em;
-  padding: 4px 10px;
-  border-radius: 999px;
-  box-shadow: 0 2px 6px rgba(255, 82, 82, 0.4);
+.record-list li::after {
+  content: "이 기록 보기 →";
+  display: block;
+  width: 100%;
+  height: 26px;
+  margin-top: 5px;
+  padding-top: 6px;
+  box-sizing: border-box;
+  border-top: 1px solid #eeeeee;
+  color: #6fcf97;
+  font-size: 13px;
+  line-height: 20px;
+  font-weight: 700;
+  text-align: left;
 }
-
-/* 안내 문구는 3열 전체를 차지하는 일반 텍스트로 */
 
 .record-list li.record-empty {
   grid-column: 1 / -1;
@@ -164,9 +197,11 @@ body {
   box-shadow: none;
   cursor: default;
   color: #888;
+  text-align: center;
 }
 
-.record-list li.record-empty::before {
+.record-list li.record-empty::before,
+.record-list li.record-empty::after {
   display: none;
 }
 
@@ -174,8 +209,6 @@ body {
   transform: none;
   box-shadow: none;
 }
-
-/* ===== 페이지네이션 ===== */
 
 .pagination {
   display: flex;
@@ -189,7 +222,7 @@ body {
   height: 36px;
   padding: 0 10px;
   border: 1px solid #ddd;
-  border-radius: 8px;
+  border-radius: 0;
   background: #fff;
   cursor: pointer;
   transition: all 0.2s ease;
