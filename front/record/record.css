@@ -67,11 +67,11 @@
   width: 300px;
   height: 50px;
   border-radius: 15px;
-  background: #176b45;
+  background: #009100;
   color: white;
   border: 1px solid #bbb;
   box-sizing: border-box;
 }
 .rbutton:hover {
-  background: #12583a;
+  background: green;
 }
