@@ -89,14 +89,23 @@ router.patch(
 // ===== 일반 유저 =====
 
 // 기록 신청
+const router = express.Router();
+const submitting = new Set(); // 신청 처리 중인 유저 (연타 방지)
+
 router.post("/request", requireAuth, async (req, res) => {
+  const userId = req.user.id;
+
+  // 이미 처리 중이면 바로 거절 (연속 클릭 방지)
+  if (submitting.has(userId)) {
+    return res
+      .status(409)
+      .json({ message: "기록 신청은 하루에 한 번만 할 수 있습니다." });
+  }
+  submitting.add(userId);
+
   try {
-    const name = String(req.body.name ?? "").trim();
-    const applicantType = String(req.body.applicantType ?? "").trim();
-    const phone = String(req.body.phone ?? "").trim();
-    const email = String(req.body.email ?? "").trim();
-    const recordDate = String(req.body.recordDate ?? "").trim();
-    const description = String(req.body.description ?? "").trim();
+    const { name, applicantType, phone, email, recordDate, description } =
+      req.body;
 
     if (
       !name ||
@@ -108,42 +117,43 @@ router.post("/request", requireAuth, async (req, res) => {
     ) {
       return res.status(400).json({ message: "모든 항목을 입력해주세요." });
     }
-    if (!APPLICANT_TYPES.includes(applicantType)) {
+
+    const phoneRegex = /^[0-9]{2,3}-[0-9]{3,4}-[0-9]{4}$/;
+    if (!phoneRegex.test(phone)) {
       return res
         .status(400)
-        .json({ message: "신청자 유형이 올바르지 않습니다." });
+        .json({ message: "연락처는 010-1234-5678 형식으로 입력해주세요." });
     }
-    if (name.length > 50) {
-      return res
-        .status(400)
-        .json({ message: "이름은 50자 이하로 입력해주세요." });
+
+    // 오늘 0시 ~ 내일 0시 (한국 시간 기준)
+    const today = new Date().toLocaleDateString("sv-SE", {
+      timeZone: "Asia/Seoul",
+    });
+    const startMs = new Date(`${today}T00:00:00+09:00`).getTime();
+    const dayStart = new Date(startMs).toISOString();
+    const dayEnd = new Date(startMs + 24 * 60 * 60 * 1000).toISOString();
+
+    const { data: existing, error: checkError } = await supabase
+      .from("record_requests")
+      .select("id")
+      .eq("user_id", userId)
+      .gte("created_at", dayStart)
+      .lt("created_at", dayEnd)
+      .limit(1);
+
+    if (checkError) {
+      console.error("신청 중복 확인 오류:", checkError);
+      return res.status(500).json({ message: "서버 오류가 발생했습니다." });
     }
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) || email.length > 100) {
+
+    if (existing && existing.length > 0) {
       return res
-        .status(400)
-        .json({ message: "이메일 형식이 올바르지 않습니다." });
-    }
-    if (!/^[0-9\-+\s]{8,20}$/.test(phone)) {
-      return res
-        .status(400)
-        .json({ message: "전화번호 형식이 올바르지 않습니다." });
-    }
-    if (
-      !/^\d{4}-\d{2}-\d{2}$/.test(recordDate) ||
-      isNaN(Date.parse(recordDate))
-    ) {
-      return res
-        .status(400)
-        .json({ message: "날짜 형식이 올바르지 않습니다." });
-    }
-    if (description.length > 500) {
-      return res
-        .status(400)
-        .json({ message: "설명은 500자 이하로 입력해주세요." });
+        .status(409)
+        .json({ message: "기록 신청은 하루에 한 번만 할 수 있습니다." });
     }
 
     const { error } = await supabase.from("record_requests").insert({
-      user_id: req.user.id,
+      user_id: userId,
       name,
       applicant_type: applicantType,
       phone,
@@ -163,6 +173,8 @@ router.post("/request", requireAuth, async (req, res) => {
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "서버 오류가 발생했습니다." });
+  } finally {
+    submitting.delete(userId); // 어떤 경우든 잠금 해제
   }
 });
 
