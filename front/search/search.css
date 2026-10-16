@@ -37,8 +37,8 @@ body {
   width: 54px;
   height: 52px;
   border-radius: 0 26px 26px 0;
-  background: #6fcf97;
-  border: 1px solid #6fcf97;
+  background: green;
+  border: 1px solid green;
   border-left: none;
   box-sizing: border-box;
   cursor: pointer;
@@ -62,8 +62,9 @@ body {
 
 .record-list ul {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 22px;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 350px), 350px));
+  justify-content: center;
+  gap: 24px;
   padding: 30px;
   margin: 0;
   margin-top: 60px;
@@ -73,6 +74,8 @@ body {
 .record-list li {
   position: relative;
   height: 195px;
+  width: 100%;
+  max-width: 350px;
   padding: 10px 20px 12px;
   box-sizing: border-box;
   display: flex;
@@ -188,7 +191,7 @@ body {
   padding-top: 6px;
   box-sizing: border-box;
   border-top: 1px solid #eeeeee;
-  color: #6fcf97;
+  color: green;
   font-size: 13px;
   line-height: 20px;
   font-weight: 700;
@@ -235,14 +238,12 @@ body {
 }
 
 .pagination button:hover:not(:disabled) {
-  border-color: #6fcf97;
-  color: #2f8a5c;
+  color: green;
 }
 
 .pagination button.active {
-  background: #6fcf97;
+  background: green;
   color: #fff;
-  border-color: #6fcf97;
 }
 
 .pagination button:disabled {
