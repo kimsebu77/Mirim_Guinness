@@ -1,14 +1,5 @@
 const form = document.querySelector("#record-form");
 
-function isValidUrl(value) {
-  try {
-    const url = new URL(value);
-    return url.protocol === "http:" || url.protocol === "https:";
-  } catch {
-    return false;
-  }
-}
-
 form.addEventListener("submit", async (e) => {
   e.preventDefault();
 
@@ -19,15 +10,9 @@ form.addEventListener("submit", async (e) => {
   const emailDomain = document.querySelector("#email-domain").value;
   const recordDate = document.querySelector("#calendar").value;
   const description = document.querySelector("#description").value.trim();
-  const youtubeUrl = document.querySelector("#youtube-url").value.trim();
 
   if (!name || !phone || !emailId || !recordDate || !description) {
     alert("모든 항목을 입력해주세요.");
-    return;
-  }
-
-  if (youtubeUrl && !isValidUrl(youtubeUrl)) {
-    alert("유튜브 링크 형식이 올바르지 않습니다.");
     return;
   }
 
@@ -48,7 +33,6 @@ form.addEventListener("submit", async (e) => {
         email,
         recordDate,
         description,
-        youtubeUrl: youtubeUrl || null,
       }),
     });
 
