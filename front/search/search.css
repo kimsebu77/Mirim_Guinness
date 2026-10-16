@@ -22,6 +22,17 @@ body {
   font-size: 15px;
 }
 
+.search-box {
+  transition: filter 0.25s ease;
+}
+
+.search-box input,
+.search-box button {
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
 .search-box button {
   width: 54px;
   height: 52px;
@@ -39,11 +50,6 @@ body {
 .search-box button img,
 .search-box button svg {
   display: block;
-}
-
-.search-box input,
-.search-box button {
-  transition: all 0.25s ease;
 }
 
 .search-box input:focus {
