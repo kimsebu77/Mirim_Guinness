@@ -159,3 +159,13 @@
   background: #f8d7da;
   color: #a02834;
 }
+
+.request-comment {
+  font-size: 13px;
+  color: #333;
+  background: white;
+  border: 1px solid #e5e5e5;
+  border-radius: 8px;
+  padding: 8px 10px;
+  margin: 0;
+}

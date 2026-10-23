@@ -92,6 +92,11 @@
       </div>
 
       <div class="request-field">
+        <span class="field-label">기록 날짜</span>
+        <span class="field-value">${request.record_date ? formatDate(request.record_date) : "-"}</span>
+      </div>
+
+      <div class="request-field">
         <span class="field-label">신청일</span>
         <span class="field-value">${formatDate(request.created_at)}</span>
       </div>

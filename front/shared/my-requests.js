@@ -77,8 +77,8 @@ async function loadMyRequests() {
     </div>
     <p class="request-item-desc">${req.description}</p>
     ${
-      req.status === "rejected" && req.comment
-        ? `<p class="request-comment">사유: ${req.comment}</p>`
+      req.comment
+        ? `<p class="request-comment">관리자 코멘트: ${req.comment}</p>`
         : ""
     }
   `;

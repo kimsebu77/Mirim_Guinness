@@ -96,3 +96,71 @@ ol {
   height: 50px;
   filter: brightness(0) invert(1);
 }
+
+/* 승인 알림 */
+.toast-container {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  z-index: 2000;
+}
+
+.toast {
+  position: relative;
+  width: 300px;
+  padding: 14px 36px 14px 16px;
+  background: white;
+  border-left: 5px solid green;
+  border-radius: 10px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+  animation: toast-in 0.3s ease;
+}
+
+.toast p {
+  margin: 0;
+}
+
+.toast-title {
+  font-weight: 700;
+  font-size: 15px;
+  color: green;
+  margin-bottom: 4px !important;
+}
+
+.toast-desc {
+  font-size: 13px;
+  color: #555;
+}
+
+.toast-comment {
+  font-size: 13px;
+  color: #333;
+  margin-top: 6px !important;
+  padding-top: 6px;
+  border-top: 1px solid #eee;
+}
+
+.toast-close {
+  position: absolute;
+  top: 8px;
+  right: 10px;
+  background: none;
+  border: none;
+  font-size: 18px;
+  color: #999;
+  cursor: pointer;
+}
+
+@keyframes toast-in {
+  from {
+    opacity: 0;
+    transform: translateX(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
