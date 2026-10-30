@@ -9,7 +9,7 @@
   padding: 35px 40px;
   font-size: 32px;
   color: white;
-  background-color: #6fcf97;
+  background-color: var(--green-dark);
   border-radius: 0;
   box-sizing: border-box;
 }
@@ -87,7 +87,7 @@
 }
 
 .record-video-link {
-  color: #2f8a5c;
+  color: var(--green);
   font-size: 18px;
   font-weight: bold;
   text-decoration: none;

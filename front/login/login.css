@@ -23,14 +23,14 @@
   box-sizing: border-box;
   padding: 10px 15px;
   border: 1px solid #ccc;
-  border-radius: 15px;
+  border-radius: var(--radius);
 
   font-size: 16px;
 }
 
 .login-input:focus {
   outline: none;
-  border-color: #222;
+  border-color: var(--green);
 }
 
 .find-links {
@@ -62,13 +62,18 @@
   height: 60px;
 
   border: none;
-  border-radius: 15px;
+  border-radius: var(--radius);
 
-  background-color: green;
+  background-color: var(--green);
   color: white;
 
   font-size: 17px;
   font-weight: bold;
 
   cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.lbutton:hover {
+  background-color: var(--green-dark);
 }

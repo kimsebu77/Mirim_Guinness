@@ -13,7 +13,7 @@
   font-size: 32px;
   font-weight: 700;
   color: white;
-  background: green;
+  background: var(--green-dark);
   box-sizing: border-box;
 }
 
@@ -35,16 +35,15 @@
   padding: 9px 16px;
   font-size: 13px;
   font-weight: 600;
-  color: green;
+  color: var(--green-dark);
   cursor: pointer;
   transition:
     background-color 0.2s ease,
     border-color 0.2s ease;
 }
-
 .logout-button:hover {
-  background: #eef8f1;
-  border-color: #6fcf97;
+  background: var(--green-light);
+  border-color: var(--green);
 }
 
 .user-info {

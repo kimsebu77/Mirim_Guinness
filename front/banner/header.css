@@ -5,8 +5,9 @@
   --green-dark: #146c3a;
   --green-light: #e8f7ee;
   --gold: #f5b82e;
-  --radius: 16px;
-  --shadow: 0 4px 14px rgba(0, 0, 0, 0.1);
+  --line: #e3e6e3;
+  --radius: 8px;
+  --shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
 }
 
 body {
@@ -23,7 +24,7 @@ body {
   justify-content: center;
   align-items: center;
   height: 110px;
-  background: linear-gradient(135deg, var(--green-dark), var(--green));
+  background: var(--green-dark);
   color: white;
 }
 .banner-logo {
@@ -32,7 +33,7 @@ body {
   top: 50%;
   transform: translateY(-50%);
   display: inline-block;
-  line-height: 0; /* a 태그 안 img 밑에 생기는 미세 여백 제거 */
+  line-height: 0;
 }
 
 /* 로고 PNG 안쪽이 투명해서, 뒤에 흰 원을 깔아 채워줌 */
@@ -55,8 +56,8 @@ body {
 .banner h2 {
   margin: 0;
   font-size: 30px;
-  font-weight: 800;
-  letter-spacing: 3px;
+  font-weight: 700;
+  letter-spacing: 2px;
 }
 .nav {
   display: flex;
@@ -67,9 +68,7 @@ body {
   margin: 0;
   padding: 0;
   background: white;
-  box-shadow:
-    inset 0 7px 10px -7px rgba(0, 0, 0, 0.2),
-    0 5px 8px -7px rgba(0, 0, 0, 0.3);
+  border-bottom: 1px solid var(--line);
 }
 ul,
 ol {
@@ -78,10 +77,10 @@ ol {
 .nav a {
   position: relative;
   display: inline-block;
-  color: black;
+  color: #222;
   text-decoration: none;
   font-weight: 600;
-  transition: color 0.25s ease;
+  transition: color 0.2s ease;
 }
 .nav a::after {
   content: "";
@@ -89,11 +88,11 @@ ol {
   left: 0;
   bottom: -5px;
   width: 100%;
-  height: 3px;
-  background: var(--gold);
+  height: 2px;
+  background: var(--green);
   transform: scaleX(0);
   transform-origin: center;
-  transition: transform 0.25s ease;
+  transition: transform 0.2s ease;
 }
 .nav a:hover {
   color: var(--green-dark);
@@ -108,7 +107,7 @@ ol {
 
   width: 150px;
   height: 110px;
-  background-color: var(--gold);
+  background-color: #f2c14e;
   border: none;
 
   font-size: 20px;
@@ -123,7 +122,7 @@ ol {
 }
 
 .login-button:hover {
-  background-color: #ffc94d;
+  background-color: #e8b43a;
 }
 
 .login-button img {
@@ -148,9 +147,10 @@ ol {
   width: 300px;
   padding: 14px 36px 14px 16px;
   background: white;
-  border-left: 5px solid var(--green);
-  border-radius: 10px;
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+  border: 1px solid var(--line);
+  border-left: 4px solid var(--green);
+  border-radius: 6px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   animation: toast-in 0.3s ease;
 }
 

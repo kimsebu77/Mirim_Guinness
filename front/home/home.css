@@ -5,13 +5,13 @@ body {
   flex: 1;
 }
 .home_records {
-  font-size: 28px;
-  font-weight: bold;
+  font-size: 26px;
+  font-weight: 700;
   margin-top: 50px;
-  margin-bottom: 12px;
+  margin-bottom: 14px;
   margin-left: 200px;
-  padding-left: 14px;
-  border-left: 6px solid var(--green);
+  padding-left: 12px;
+  border-left: 4px solid var(--green);
 }
 
 .card-container {
@@ -29,17 +29,17 @@ body {
   position: relative;
   overflow: hidden;
   background-color: white;
+  border: 1px solid var(--line);
   border-radius: var(--radius);
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
   cursor: pointer;
   transition:
-    transform 0.25s ease,
-    box-shadow 0.25s ease;
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
 }
 
 .card:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.18);
+  border-color: var(--green);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
 .card img {
@@ -49,7 +49,12 @@ body {
   object-fit: cover;
   display: block;
 }
-
+.card img[src$="Guinness.png"] {
+  object-fit: contain;
+  box-sizing: border-box;
+  padding: 24px;
+  background: #f4f4f2;
+}
 .card-text {
   min-height: 60px;
   box-sizing: border-box;
@@ -66,7 +71,7 @@ body {
 
 .card-title {
   font-size: 16px;
-  font-weight: bold;
+  font-weight: 700;
   max-width: 100%;
   white-space: nowrap;
   overflow: hidden;
@@ -122,18 +127,33 @@ body {
   background-position: center;
 }
 .slide-1 {
-  background: linear-gradient(135deg, #146c3a, #1f9d55);
+  background-color: #2a2a28;
+  background-image:
+    linear-gradient(
+      90deg,
+      rgba(0, 0, 0, 0.6) 0%,
+      rgba(0, 0, 0, 0.25) 55%,
+      rgba(0, 0, 0, 0) 100%
+    ),
+    url("hero1.jpeg");
 }
 .slide-2 {
-  background: linear-gradient(135deg, #1f9d55, #f5b82e);
+  background-color: #2a2a28;
+  background-image:
+    linear-gradient(
+      90deg,
+      rgba(0, 0, 0, 0.6) 0%,
+      rgba(0, 0, 0, 0.25) 55%,
+      rgba(0, 0, 0, 0) 100%
+    ),
+    url("hero2.jpg");
 }
 .slide-content {
   position: absolute;
   left: 100px;
   top: 50%;
   transform: translateY(-50%);
-  color: white;
-  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+  color: var(--green-dark);
 }
 
 .slide-content h1 {
@@ -144,26 +164,26 @@ body {
 .slide-content p {
   font-size: 22px;
   margin-bottom: 30px;
+  font-weight: 500;
+  color: #fff;
+  opacity: 0.9;
+  text-shadow: 0 1px 6px rgba(0, 0, 0, 0.45);
 }
 
 .slide-content button {
   padding: 15px 30px;
   border: none;
-  border-radius: 8px;
+  border-radius: var(--radius);
   background-color: var(--gold);
   color: #222;
   font-size: 18px;
   font-weight: 700;
   cursor: pointer;
-  text-shadow: none;
-  transition:
-    transform 0.2s ease,
-    box-shadow 0.2s ease;
+  transition: background-color 0.2s ease;
 }
 
 .slide-content button:hover {
-  transform: translateY(-3px) scale(1.04);
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.25);
+  background-color: #e8b43a;
 }
 
 .prev,
@@ -185,17 +205,16 @@ body {
 .next {
   right: 20px;
 }
-
 .record-news {
   display: flex;
   align-items: center;
-  margin: 40px auto 0;
-  width: 80%;
+  width: 1036px;
   height: 45px;
+  margin: 40px 0 0 200px;
 
   background: var(--green-light);
   border: 1px solid #d3eedd;
-  border-radius: 10px;
+  border-radius: var(--radius);
   overflow: hidden;
 }
 
@@ -244,4 +263,8 @@ body {
 
 .record-news-track a:hover {
   text-decoration: underline;
+}
+.slide-content,
+.slide-content h1 {
+  color: #fff;
 }

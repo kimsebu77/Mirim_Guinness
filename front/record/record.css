@@ -1,9 +1,9 @@
 body {
-  background-color: #f6fbf4;
+  background-color: #f4f7f4;
 }
 
 .record-page {
-  padding: 50px 20px 0;
+  padding: 50px 20px 60px;
 }
 
 /* ===== 신청 카드 ===== */
@@ -12,45 +12,30 @@ body {
   max-width: 900px;
   margin: 0 auto;
   background: white;
-  border-radius: 20px;
-  box-shadow: 0 8px 30px rgba(20, 108, 58, 0.12);
+  border: 1px solid #e0e5e0;
+  border-radius: 10px;
   overflow: hidden;
   text-align: left;
 }
 
 .record-head {
-  position: relative;
-  overflow: hidden;
-  padding: 36px 44px;
-  color: white;
-  background: linear-gradient(135deg, var(--green-dark), var(--green));
-}
-
-.record-head::after {
-  content: "";
-  position: absolute;
-  right: -40px;
-  top: -60px;
-  width: 200px;
-  height: 200px;
-  border-radius: 50%;
-  background: rgba(245, 184, 46, 0.35);
+  padding: 34px 44px;
+  color: var(--green-dark);
+  background: var(--green-light);
+  border-bottom: 1px solid #d3eedd;
 }
 
 .record-head h1 {
-  position: relative;
-  z-index: 1;
   margin: 0 0 8px;
-  font-size: 32px;
-  font-weight: 800;
+  font-size: 30px;
+  font-weight: 700;
 }
 
 .record-head p {
-  position: relative;
-  z-index: 1;
   margin: 0;
-  font-size: 16px;
-  opacity: 0.92;
+  font-size: 15px;
+  color: #4a5a50;
+  opacity: 1;
 }
 
 .record-body {
@@ -59,16 +44,17 @@ body {
 
 /* ===== 섹션 제목 ===== */
 .form-section {
-  margin: 0 0 18px;
+  margin: 0 0 20px;
   padding-left: 12px;
-  font-size: 18px;
-  font-weight: 800;
+  font-size: 17px;
+  font-weight: 700;
   color: var(--green-dark);
-  border-left: 5px solid var(--gold);
+  border-left: 4px solid var(--gold);
 }
 
 .form-section:not(:first-child) {
-  margin-top: 34px;
+  margin-top: 40px;
+  padding-top: 0;
 }
 
 /* ===== 입력칸 배치 (2열) ===== */
@@ -92,27 +78,28 @@ body {
 
 .input-group label {
   font-size: 14px;
-  font-weight: 700;
-  color: #444;
+  font-weight: 600;
+  color: #333;
 }
 
 /* ===== 입력 스타일 ===== */
 .con-input,
 .email-box select {
   width: 100%;
-  min-height: 50px;
+  min-height: 48px;
   box-sizing: border-box;
-  border-radius: 12px;
+  border-radius: 6px;
   padding: 10px 14px;
-  border: 1.5px solid #d5e0d8;
-  background: #fbfdfb;
+  border: 1px solid #cfd8d1;
+  background: white;
   font-family: inherit;
   font-size: 15px;
   color: #222;
-  transition:
-    border-color 0.2s ease,
-    box-shadow 0.2s ease,
-    background-color 0.2s ease;
+  transition: border-color 0.2s ease;
+}
+
+.con-input::placeholder {
+  color: #9aa59d;
 }
 
 textarea.con-input {
@@ -122,15 +109,14 @@ textarea.con-input {
 
 .con-input:hover,
 .email-box select:hover {
-  border-color: #a9cdb7;
+  border-color: #9fb3a5;
 }
 
 .con-input:focus,
 .email-box select:focus {
   outline: none;
   border-color: var(--green);
-  background: white;
-  box-shadow: 0 0 0 4px rgba(31, 157, 85, 0.15);
+  box-shadow: 0 0 0 1px var(--green);
 }
 
 /* ===== 이메일 (입력 + 도메인 선택) ===== */
@@ -142,14 +128,15 @@ textarea.con-input {
   flex: 1;
   min-width: 0;
   width: auto;
-  border-radius: 12px 0 0 12px;
+  border-radius: 6px 0 0 6px;
 }
 
 .email-box select {
   width: 150px;
   flex-shrink: 0;
   border-left: none;
-  border-radius: 0 12px 12px 0;
+  border-radius: 0 6px 6px 0;
+  background: #f7f9f7;
 }
 
 /* ===== 안내 문구 / 버튼 ===== */
@@ -159,36 +146,27 @@ textarea.con-input {
   font-size: 14px;
   color: var(--green-dark);
   background: var(--green-light);
-  border-radius: 10px;
+  border-radius: 6px;
 }
 
 .rbutton {
   display: block;
   width: 100%;
-  height: 56px;
+  height: 54px;
   margin-top: 24px;
   border: none;
-  border-radius: 14px;
+  border-radius: 6px;
   background: var(--green);
   color: white;
   font-family: inherit;
   font-size: 17px;
-  font-weight: 800;
+  font-weight: 700;
   cursor: pointer;
-  transition:
-    background-color 0.2s ease,
-    transform 0.2s ease,
-    box-shadow 0.2s ease;
+  transition: background-color 0.2s ease;
 }
 
 .rbutton:hover {
   background: var(--green-dark);
-  transform: translateY(-2px);
-  box-shadow: 0 10px 20px rgba(31, 157, 85, 0.3);
-}
-
-.rbutton:active {
-  transform: translateY(0);
 }
 
 .myrecord-link {
@@ -199,9 +177,9 @@ textarea.con-input {
   color: var(--green-dark);
   text-decoration: none;
   font-size: 14px;
-  font-weight: 700;
-  border: 1.5px solid #cfe5d7;
-  border-radius: 999px;
+  font-weight: 600;
+  border: 1px solid #cfd8d1;
+  border-radius: 6px;
   transition:
     background-color 0.2s ease,
     border-color 0.2s ease;
