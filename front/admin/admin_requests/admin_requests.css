@@ -1,10 +1,12 @@
 .requests-top {
   width: 80%;
   max-width: 800px;
-  margin: 24px auto 12px;
+  margin: 32px auto 14px;
 }
 
 .requests-top h1 {
+  margin: 0;
+  font-size: 24px;
   color: #222;
 }
 
@@ -12,14 +14,14 @@
   width: 80%;
   max-width: 800px;
   height: 600px;
-  margin: 0 auto;
+  margin: 0 auto 60px;
   display: flex;
   flex-direction: column;
   gap: 10px;
-  padding: 16px;
-  background-color: #f7f7f7;
-  border: 1px solid #e0e0e0;
-  border-radius: 12px;
+  padding: 14px;
+  background-color: #f4f7f4;
+  border: 1px solid #e0e5e0;
+  border-radius: 10px;
   overflow-y: auto;
   box-sizing: border-box;
 }
@@ -29,34 +31,35 @@
 }
 
 .requests-container::-webkit-scrollbar-track {
-  background: #f7f7f7;
-  border-radius: 4px;
+  background: transparent;
 }
 
 .requests-container::-webkit-scrollbar-thumb {
-  background: #ccc;
+  background: #c9d2cb;
   border-radius: 4px;
 }
 
 .requests-container::-webkit-scrollbar-thumb:hover {
-  background: #aaa;
+  background: #a9b5ac;
 }
 
 .request-bar {
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
-  background-color: #ffffff;
-  border: 1px solid #e5e5e5;
-  border-radius: 8px;
-  padding: 16px 20px;
   gap: 16px;
+  padding: 16px 20px;
+  background-color: #ffffff;
+  border: 1px solid #e0e5e0;
+  border-left: 4px solid var(--gold);
+  border-radius: 8px;
   transition: opacity 0.2s;
   flex-shrink: 0;
 }
 
 .request-bar.processed {
-  opacity: 0.6;
+  opacity: 0.65;
+  border-left-color: #cfd8d1;
 }
 
 .request-main {
@@ -74,42 +77,47 @@
 }
 
 .request-name {
-  font-weight: bold;
+  font-weight: 700;
   font-size: 1.05em;
   color: #222;
 }
 
-.request-type-badge,
-.request-status-badge {
-  font-size: 0.7em;
+/* 신청자 구분: 무채색 */
+.request-type-badge {
+  font-size: 0.72em;
   padding: 3px 8px;
-  border-radius: 10px;
-  color: #fff;
-  font-weight: 500;
+  border-radius: 4px;
+  font-weight: 600;
+  color: #55615a;
+  background-color: #eef1ee;
 }
 
-.request-type-badge.student {
-  background-color: #3498db;
-}
-
-.request-type-badge.teacher {
-  background-color: #9b59b6;
+/* 상태: 색으로 구분 */
+.request-status-badge {
+  font-size: 0.72em;
+  padding: 3px 8px;
+  border-radius: 4px;
+  font-weight: 600;
 }
 
 .request-status-badge.pending {
-  background-color: #f39c12;
+  color: #8a6a0a;
+  background-color: #fdf1d0;
 }
 
 .request-status-badge.approved {
-  background-color: #2ecc71;
+  color: var(--green-dark);
+  background-color: #e3f1e8;
 }
 
 .request-status-badge.rejected {
-  background-color: #e74c3c;
+  color: #a02834;
+  background-color: #f8e3e1;
 }
 
 .request-status-badge.returned {
-  background-color: #95a5a6;
+  color: #666;
+  background-color: #eceeec;
 }
 
 .request-field {
@@ -119,8 +127,8 @@
 }
 
 .field-label {
-  min-width: 44px;
-  color: #999;
+  min-width: 52px;
+  color: #8a948c;
   flex-shrink: 0;
 }
 
@@ -135,13 +143,19 @@
 
 .comment-input {
   width: 100%;
-  padding: 6px 10px;
-  border-radius: 4px;
-  border: 1px solid #ccc;
+  padding: 7px 10px;
+  border-radius: 6px;
+  border: 1px solid #cfd8d1;
   background-color: #fff;
   color: #222;
   box-sizing: border-box;
+  font-family: inherit;
   font-size: 0.85em;
+}
+
+.comment-input:focus {
+  outline: none;
+  border-color: var(--green);
 }
 
 .request-actions {
@@ -152,20 +166,32 @@
 }
 
 .request-actions button {
-  padding: 7px 16px;
-  border: none;
-  border-radius: 4px;
+  padding: 7px 18px;
+  border-radius: 6px;
   cursor: pointer;
+  font-family: inherit;
   font-size: 0.85em;
+  font-weight: 600;
   white-space: nowrap;
 }
 
 .btn-approve {
-  background-color: #2ecc71;
+  background-color: var(--green);
   color: #fff;
+  border: 1px solid var(--green);
+}
+
+.btn-approve:hover {
+  background-color: var(--green-dark);
+  border-color: var(--green-dark);
 }
 
 .btn-reject {
-  background-color: #e74c3c;
-  color: #fff;
+  background-color: #fff;
+  color: #b3261e;
+  border: 1px solid #e3b8b4;
+}
+
+.btn-reject:hover {
+  background-color: #fbeceb;
 }

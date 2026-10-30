@@ -4,35 +4,43 @@
   justify-content: space-between;
   width: 80%;
   max-width: 900px;
-  margin: 24px auto 12px;
+  margin: 32px auto 14px;
 }
 
 .records-top h1 {
+  margin: 0;
+  font-size: 24px;
   color: #222;
 }
 
 .btn-add {
   padding: 8px 16px;
-  background-color: #2ecc71;
+  background: var(--green);
   color: #fff;
   border: none;
   border-radius: 6px;
   cursor: pointer;
-  font-size: 0.9em;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.btn-add:hover {
+  background: var(--green-dark);
 }
 
 .records-container {
   width: 80%;
   max-width: 900px;
   height: 600px;
-  margin: 0 auto;
+  margin: 0 auto 60px;
   display: flex;
   flex-direction: column;
-  gap: 10px;
-  padding: 16px;
-  background-color: #f7f7f7;
-  border: 1px solid #e0e0e0;
-  border-radius: 12px;
+  gap: 8px;
+  padding: 14px;
+  background-color: #f4f7f4;
+  border: 1px solid #e0e5e0;
+  border-radius: 10px;
   overflow-y: auto;
   box-sizing: border-box;
 }
@@ -41,17 +49,17 @@
   display: flex;
   align-items: center;
   gap: 16px;
-  background-color: #ffffff;
-  border: 1px solid #e5e5e5;
-  border-radius: 8px;
   padding: 12px 16px;
+  background: white;
+  border: 1px solid #e0e5e0;
+  border-radius: 8px;
   flex-shrink: 0;
 }
 
 .record-photo {
-  width: 60px;
-  height: 60px;
-  border-radius: 8px;
+  width: 56px;
+  height: 56px;
+  border-radius: 6px;
   object-fit: cover;
   flex-shrink: 0;
 }
@@ -60,8 +68,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: #eee;
-  color: #999;
+  background-color: #eef1ee;
+  color: #9aa59d;
   font-size: 0.7em;
   text-align: center;
 }
@@ -73,8 +81,14 @@
   gap: 2px;
 }
 
+.record-name {
+  font-size: 1.05em;
+  font-weight: 700;
+  color: var(--green-dark);
+}
+
 .record-holder {
-  font-weight: bold;
+  font-weight: 600;
   color: #222;
 }
 
@@ -85,19 +99,19 @@
 
 .record-desc {
   font-size: 0.85em;
-  color: #777;
+  color: #77817a;
 }
 
 .record-date {
   font-size: 0.8em;
-  color: #999;
+  color: #9aa59d;
 }
 
 .record-youtube {
-  font-size: 0.85em;
-  color: #e74c3c;
-  text-decoration: none;
   margin-top: 2px;
+  font-size: 0.85em;
+  color: var(--green);
+  text-decoration: none;
 }
 
 .record-youtube:hover {
@@ -110,29 +124,39 @@
 }
 
 .record-actions button {
-  padding: 6px 12px;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
+  padding: 6px 14px;
+  background: white;
+  border: 1px solid #cfd8d1;
+  border-radius: 6px;
+  font-family: inherit;
   font-size: 0.85em;
+  font-weight: 600;
+  cursor: pointer;
 }
 
 .btn-edit {
-  background-color: #3498db;
-  color: #fff;
+  color: #222;
+}
+
+.btn-edit:hover {
+  border-color: var(--green);
+  color: var(--green-dark);
 }
 
 .btn-delete {
-  background-color: #e74c3c;
-  color: #fff;
+  color: #b3261e;
 }
 
-/* ===== 모달 (라이트) ===== */
+.btn-delete:hover {
+  background: #fbeceb;
+  border-color: #e3b8b4;
+}
 
+/* ===== 모달 ===== */
 .modal {
   position: fixed;
   inset: 0;
-  background-color: rgba(0, 0, 0, 0.3);
+  background-color: rgba(0, 0, 0, 0.4);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -145,11 +169,11 @@
 
 .modal-box {
   background-color: #ffffff;
-  border-radius: 12px;
+  border: 1px solid #e0e5e0;
+  border-radius: 10px;
   padding: 24px;
   width: 90%;
   max-width: 400px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
 }
 
 .modal-box h2 {
@@ -171,11 +195,17 @@
 
 .form-group input {
   padding: 8px 10px;
-  border-radius: 4px;
-  border: 1px solid #ccc;
+  border-radius: 6px;
+  border: 1px solid #cfd8d1;
   background-color: #fff;
   color: #222;
+  font-family: inherit;
   box-sizing: border-box;
+}
+
+.form-group input:focus {
+  outline: none;
+  border-color: var(--green);
 }
 
 .modal-actions {
@@ -187,18 +217,25 @@
 
 .btn-cancel {
   padding: 8px 16px;
-  background-color: #eee;
+  background: white;
   color: #333;
-  border: none;
+  border: 1px solid #cfd8d1;
   border-radius: 6px;
+  font-family: inherit;
   cursor: pointer;
 }
 
 .btn-save {
   padding: 8px 16px;
-  background-color: #2ecc71;
+  background: var(--green);
   color: #fff;
   border: none;
   border-radius: 6px;
+  font-family: inherit;
+  font-weight: 600;
   cursor: pointer;
+}
+
+.btn-save:hover {
+  background: var(--green-dark);
 }

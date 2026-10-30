@@ -1,6 +1,9 @@
 <!doctype html>
-<html lang="en">
+<html lang="ko">
   <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>신청된 기록</title>
     <link rel="stylesheet" href="../admin_header/admin_header.css" />
     <link rel="stylesheet" href="./admin_requests.css" />
   </head>
@@ -9,9 +12,24 @@
     <div class="requests-top">
       <h1>신청된 기록</h1>
     </div>
-    <div class="requests-container" id="requests-container">임시</div>
+    <div class="requests-container" id="requests-container"></div>
     <script src="../admin_header/admin_header.js"></script>
     <script>
+      // 신청자가 입력한 값을 안전하게 화면에 넣기 위한 이스케이프
+      function esc(s) {
+        return String(s ?? "").replace(
+          /[&<>"']/g,
+          (c) =>
+            ({
+              "&": "&amp;",
+              "<": "&lt;",
+              ">": "&gt;",
+              '"': "&quot;",
+              "'": "&#39;",
+            })[c],
+        );
+      }
+
       async function fetchRequests() {
         const token = localStorage.getItem("access_token");
         const res = await fetch(
@@ -45,11 +63,14 @@
       }
 
       function statusLabel(status) {
-        return {
-          pending: "대기중",
-          approved: "승인됨",
-          rejected: "거절됨",
-        }[status];
+        return (
+          {
+            pending: "대기중",
+            approved: "승인됨",
+            rejected: "거절됨",
+            returned: "반려됨",
+          }[status] ?? status
+        );
       }
 
       function formatDate(isoString) {
@@ -72,23 +93,23 @@
         bar.innerHTML = `
     <div class="request-main">
       <div class="request-name-row">
-        <span class="request-name">${request.name}</span>
-        <span class="request-type-badge ${request.applicant_type}">
+        <span class="request-name">${esc(request.name)}</span>
+        <span class="request-type-badge ${esc(request.applicant_type)}">
           ${applicantTypeLabel(request.applicant_type)}
         </span>
-        <span class="request-status-badge ${request.status}">
-          ${statusLabel(request.status)}
+        <span class="request-status-badge ${esc(request.status)}">
+          ${esc(statusLabel(request.status))}
         </span>
       </div>
 
       <div class="request-field">
         <span class="field-label">이메일</span>
-        <span class="field-value">${request.email}</span>
+        <span class="field-value">${esc(request.email)}</span>
       </div>
 
       <div class="request-field">
         <span class="field-label">설명</span>
-        <span class="field-value">${request.description}</span>
+        <span class="field-value">${esc(request.description)}</span>
       </div>
 
       <div class="request-field">
@@ -106,7 +127,7 @@
           type="text"
           class="comment-input"
           placeholder="코멘트 입력..."
-          value="${request.comment ?? ""}"
+          value="${esc(request.comment)}"
         />
       </div>
     </div>
@@ -138,7 +159,7 @@
         const container = document.getElementById("requests-container");
         container.innerHTML = "";
 
-        const data = await fetchRequests();
+        const data = (await fetchRequests()) || [];
         const sorted = [...data].sort((a, b) => {
           if (a.status === "pending" && b.status !== "pending") return -1;
           if (a.status !== "pending" && b.status === "pending") return 1;
