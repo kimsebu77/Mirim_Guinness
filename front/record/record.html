@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="ko">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -12,75 +12,99 @@
   </head>
   <body>
     <div id="header"></div>
-    <form id="record-form" class="record">
-      <h1>기록 신청</h1>
-      <div class="con">
-        <div class="input-group">
-          <label>이름</label>
-          <input
-            id="name"
-            type="text"
-            placeholder="이름을 입력하세요"
-            class="con-input"
-          />
+
+    <main class="record-page">
+      <form id="record-form" class="record">
+        <div class="record-head">
+          <h1>기록 신청</h1>
+          <p>나만의 특별한 기록을 미림 기네스북에 올려보세요!</p>
         </div>
 
-        <div class="input-group">
-          <label>학생/선생님</label>
-          <select id="applicant-type" class="con-input">
-            <option value="student">학생</option>
-            <option value="teacher">선생님</option>
-          </select>
-        </div>
-      </div>
+        <div class="record-body">
+          <h2 class="form-section">신청자 정보</h2>
+          <div class="con">
+            <div class="input-group">
+              <label for="name">이름</label>
+              <input
+                id="name"
+                type="text"
+                placeholder="이름을 입력하세요"
+                class="con-input"
+              />
+            </div>
 
-      <div class="con">
-        <div class="input-group">
-          <label>실시간 연락처</label>
-          <input
-            id="phone"
-            type="tel"
-            pattern="[0-9]{2,3}-[0-9]{3,4}-[0-9]{4}"
-            placeholder="예: 010-1234-5678"
-            required
-            class="con-input"
-          />
-        </div>
-        <div class="input-group">
-          <label>이메일</label>
-          <div class="email-box">
-            <input
-              id="email-id"
-              type="text"
-              placeholder="이메일을 입력하세요"
-              class="con-input"
-            />
-            <select id="email-domain">
-              <option value="@gmail.com">@gmail.com</option>
-              <option value="@e-mirim.hs.kr">@e-mirim.hs.kr</option>
-            </select>
+            <div class="input-group">
+              <label for="applicant-type">학생/선생님</label>
+              <select id="applicant-type" class="con-input">
+                <option value="student">학생</option>
+                <option value="teacher">선생님</option>
+              </select>
+            </div>
+
+            <div class="input-group">
+              <label for="phone">실시간 연락처</label>
+              <input
+                id="phone"
+                type="tel"
+                pattern="[0-9]{2,3}-[0-9]{3,4}-[0-9]{4}"
+                placeholder="예: 010-1234-5678"
+                required
+                class="con-input"
+              />
+            </div>
+
+            <div class="input-group">
+              <label for="email-id">이메일</label>
+              <div class="email-box">
+                <input
+                  id="email-id"
+                  type="text"
+                  placeholder="이메일을 입력하세요"
+                  class="con-input"
+                />
+                <select id="email-domain">
+                  <option value="@gmail.com">@gmail.com</option>
+                  <option value="@e-mirim.hs.kr">@e-mirim.hs.kr</option>
+                </select>
+              </div>
+            </div>
           </div>
+
+          <h2 class="form-section">기록 정보</h2>
+          <div class="con">
+            <div class="input-group">
+              <label for="calendar">기록 측정 날짜</label>
+              <input
+                type="date"
+                id="calendar"
+                name="calendar"
+                class="con-input"
+              />
+            </div>
+
+            <div class="input-group full">
+              <label for="description">설명</label>
+              <textarea
+                id="description"
+                class="con-input"
+                rows="4"
+                placeholder="어떤 기록인지 설명해주세요"
+              ></textarea>
+            </div>
+          </div>
+
+          <p class="record-note">
+            신청한 기록은 관리자 확인 후 승인되면 기록 목록에 올라가요.
+          </p>
+
+          <button type="submit" class="rbutton">신청하기</button>
+          <a href="" id="myrecord-link" class="myrecord-link">
+            내가 신청한 기록보기
+          </a>
         </div>
-      </div>
-      <div class="con">
-        <div class="input-group">
-          <label>기록 측정 날짜</label>
-          <input type="date" id="calendar" name="calendar" class="con-input" />
-        </div>
-        <div class="input-group">
-          <label>설명</label>
-          <input
-            id="description"
-            class="con-input"
-            placeholder="어떤 기록인지 설명해주세요"
-          />
-        </div>
-      </div>
-      <button type="submit" class="rbutton">신청하기</button>
-      <a href="" id="myrecord-link" class="myrecord-link">
-        내가 신청한 기록보기
-      </a>
-    </form>
+      </form>
+    </main>
+
     <div id="footer"></div>
 
     <script src="../shared/my-requests.js" defer></script>

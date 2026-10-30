@@ -2,6 +2,7 @@
   width: 100%;
   margin-top: 100px;
   background-color: #f2f2f2;
+  border-top: 4px solid var(--green);
 }
 
 .footer-container {
@@ -45,6 +46,11 @@
 
   color: #444;
   text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.sns-section a:hover {
+  color: var(--green);
 }
 
 .sns-section svg {
@@ -70,7 +76,7 @@
 
   font-size: 18px;
   font-weight: bold;
-  color: #e53935;
+  color: var(--green-dark);
 }
 
 .footer-section p {
