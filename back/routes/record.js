@@ -6,7 +6,6 @@ const requireAdmin = require("../middleware/requireAdmin");
 const router = express.Router();
 
 const STATUSES = ["pending", "approved", "rejected"];
-const APPLICANT_TYPES = ["student", "teacher"];
 
 // ===== 관리자 =====
 
