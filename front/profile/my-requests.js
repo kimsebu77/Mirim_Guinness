@@ -7,7 +7,7 @@ const statusLabel = {
 async function injectModal() {
   if (document.querySelector("#my-requests-modal")) return;
 
-  const res = await fetch("../shared/my-requests-modal.html");
+  const res = await fetch("../profile/my-requests-modal.html");
   const html = await res.text();
   document.body.insertAdjacentHTML("beforeend", html);
 
